@@ -11,6 +11,10 @@ class Substituicao extends Model
 
     protected $table = 'substituicoes';
 
+    protected $fillable = [
+        'tempo_de_jogo',
+    ];
+
     /** O jogador que saiu */
     function jogadorQueSaiu()
     {
