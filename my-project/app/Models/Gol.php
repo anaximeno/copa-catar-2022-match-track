@@ -9,6 +9,14 @@ class Gol extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'tempo_do_jogo',
+        'id_jogador',
+        'id_equipa',
+        'id_confronto',
+        'detalhes'
+    ];
+
     /** O jogador que marcou o golo */
     function jogador()
     {
