@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_equipa_visita');
             $table->unsignedBigInteger('id_arbitro_principal');
 
-            $table->boolean('terminou');
+            $table->boolean('terminou')->default(false);
             $table->string('rodada')->nullable();
 
             $table->foreign('id_equipa_casa')
