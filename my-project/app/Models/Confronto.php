@@ -11,6 +11,18 @@ class Confronto extends Model
 
     protected $table = 'confrontos';
 
+    protected $fillable = [
+        'local',
+        'inicio',
+        'fim',
+        'dia',
+        'estadio',
+        'id_equipa_casa',
+        'id_equipa_visita',
+        'id_arbitro_principal',
+        'rodada'
+    ];
+
     /** Retorna o árbitro principal do jogo. */
     function arbitro()
     {
