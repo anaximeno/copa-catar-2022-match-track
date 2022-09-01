@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Arbitro;
 use Illuminate\Http\Request;
+use App\Models\Arbitro;
 
 class ArbitroController extends Controller
 {
@@ -14,17 +14,7 @@ class ArbitroController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Arbitro::all();
     }
 
     /**
@@ -35,51 +25,45 @@ class ArbitroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attrs = $request->only(['nome', 'sobrenome', 'idade']);
+        return Arbitro::create($attrs);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Arbitro  $arbitro
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Arbitro $arbitro)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Arbitro  $arbitro
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Arbitro $arbitro)
-    {
-        //
+        return Arbitro::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Arbitro  $arbitro
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Arbitro $arbitro)
+    public function update(Request $request, $id)
     {
-        //
+        $arbitro = Arbitro::findOrFail($id);
+        $attrs = $request->only(['nome', 'sobrenome', 'idade']);
+        $arbitro->update($attrs);
+        return $arbitro;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Arbitro  $arbitro
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Arbitro $arbitro)
+    public function destroy($id)
     {
-        //
+        Arbitro::findOrFail($id)->delete();
+        return response('', 204);
     }
 }
