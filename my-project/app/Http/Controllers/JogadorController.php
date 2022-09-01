@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jogador;
 use Illuminate\Http\Request;
+use App\Models\Jogador;
 
 class JogadorController extends Controller
 {
@@ -14,17 +14,7 @@ class JogadorController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Jogador::all();
     }
 
     /**
@@ -35,51 +25,45 @@ class JogadorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attrs = $request->only(['nome', 'sobrenome', 'apelido', 'idade']);
+        return Jogador::create($attrs);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Jogador  $jogador
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Jogador $jogador)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Jogador  $jogador
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Jogador $jogador)
-    {
-        //
+        return Jogador::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Jogador  $jogador
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Jogador $jogador)
+    public function update(Request $request, $id)
     {
-        //
+        $attrs = $request->only(['nome', 'sobrenome', 'apelido', 'idade']);
+        $jogador = Jogador::findOrFail($id);
+        $jogador->update($attrs);
+        return $jogador;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Jogador  $jogador
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Jogador $jogador)
+    public function destroy($id)
     {
-        //
+        Jogador::findOrFail($id)->delete();
+        return response('', 204);
     }
 }
