@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('sobrenome');
             $table->string('apelido');
             $table->tinyInteger('idade', false, true);
-            $table->string('posicao'); // NOTE: poderia ser extraído à sua tabela
             $table->timestamps();
         });
     }
