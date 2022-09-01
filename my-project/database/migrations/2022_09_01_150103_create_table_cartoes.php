@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('cartoes', function (Blueprint $table) {
             $table->id();
             $table->dateTime('tempo_do_jogo');
-            $table->string('cor'); // Poderia ser extraido à sua tabela
+            $table->string('cor'); // NOTE: poderia ser extraído à sua tabela
             $table->unsignedBigInteger('id_jogador');
             $table->unsignedBigInteger('id_equipa');
             $table->unsignedBigInteger('id_confronto');

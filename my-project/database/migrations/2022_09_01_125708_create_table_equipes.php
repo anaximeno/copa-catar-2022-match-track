@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->binary('simbolo')->nullable();
-            $table->string('local_pertencente');
+            $table->string('local_pertencente'); // NOTE: poderia ser extraído à sua tabela
             $table->timestamps();
         });
     }

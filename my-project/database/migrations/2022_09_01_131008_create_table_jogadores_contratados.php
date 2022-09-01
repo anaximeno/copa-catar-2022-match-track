@@ -26,7 +26,7 @@ return new class extends Migration
             $table->dateTime('inicio_do_contrato');
             $table->dateTime('expiracao_do_contrato');
             $table->tinyInteger('numero_da_camisa');
-            $table->string('posicao');
+            $table->string('posicao'); // NOTE: poderia ser extraído à sua tabela
             $table->timestamps();
         });
     }

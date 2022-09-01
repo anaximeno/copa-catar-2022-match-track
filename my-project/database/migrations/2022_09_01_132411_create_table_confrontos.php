@@ -19,7 +19,7 @@ return new class extends Migration
             $table->dateTime('inicio');
             $table->dateTime('fim')->nullable();
             $table->date('dia');
-            $table->string('estadio');
+            $table->string('estadio'); // NOTE: poderia ser extraído à sua tabela
             $table->unsignedBigInteger('id_equipa_casa');
             $table->unsignedBigInteger('id_equipa_visita');
             $table->unsignedBigInteger('id_arbitro_principal');
