@@ -16,4 +16,16 @@ class JogadorEmCampo extends Model
     {
         return $this->hasOne(\App\Models\Confronto::class, 'id', 'id_confronto');
     }
+
+    // Retorna o jogador em campo.
+    function jogador()
+    {
+        return $this->hasOne(\App\Models\Jogador::class, 'id', 'id_jogador');
+    }
+
+    // Retorna a equipa do jogador
+    function equipa()
+    {
+        return $this->hasOne(\App\Models\Equipa::class, 'id', 'id_equipa');
+    }
 }
