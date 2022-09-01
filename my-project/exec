@@ -1,0 +1,26 @@
+#!/bin/bash
+
+COMPOSE="docker compose"
+APP_NAME="myapp"
+
+COMMAND="$COMPOSE exec $APP_NAME"
+
+EXEC() {
+    if ! [[ -z $1 ]]
+    then
+        # Execute the command
+        $COMMAND $1
+        # Get the output code of the execution
+        OUT=$?
+
+        if [[ $OUT -ne 0 ]]
+        then
+            echo "Error($OUT) executing command '$COMMAND $1'"
+        fi
+    else
+        echo "No arguments."
+        echo "Try './exec ls' which is equivalent to '$COMMAND ls'"
+    fi
+}
+
+EXEC $*
