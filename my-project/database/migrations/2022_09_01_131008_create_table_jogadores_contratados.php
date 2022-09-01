@@ -24,7 +24,7 @@ return new class extends Migration
                   ->on('jogadores');
             $table->primary(['id_equipa', 'id_jogador']);
             $table->dateTime('inicio_do_contrato');
-            $table->dateTime('fim_do_contrato');
+            $table->dateTime('fim_do_contrato')->nullable();
             $table->tinyInteger('numero_da_camisa');
             $table->string('posicao'); // NOTE: poderia ser extraído à sua tabela
             $table->timestamps();
