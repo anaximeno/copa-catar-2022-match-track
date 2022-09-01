@@ -15,7 +15,7 @@ EXEC() {
 
         if [[ $OUT -ne 0 ]]
         then
-            echo "Error($OUT) executing command '$COMMAND $1'"
+            echo "Error ($OUT) executing command '$COMMAND $1'"
         fi
     else
         echo "No arguments."
