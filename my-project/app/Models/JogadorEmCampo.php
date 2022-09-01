@@ -11,6 +11,11 @@ class JogadorEmCampo extends Model
 
     protected $table = 'jogador_em_campo';
 
+    protected $fillable = [
+        'tempo_de_entrada',
+        'tempo_de_saida'
+    ];
+
     /** Retorna o confronto em que o jogador está participando */
     function confronto()
     {
