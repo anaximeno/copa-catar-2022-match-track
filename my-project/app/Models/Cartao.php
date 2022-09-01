@@ -11,19 +11,19 @@ class Cartao extends Model
 
     protected $table = 'cartoes';
 
-    // O jogador que recebeu o cartão
+    /** O jogador que recebeu o cartão */
     function jogador()
     {
         return $this->hasOne(\App\Models\Jogador::class, 'id', 'id_jogador');
     }
 
-    // A equipa que recebeu cartão
+    /** A equipa que recebeu cartão */
     function equipa()
     {
         return $this->hasOne(\App\Models\Confronto::class, 'id', 'id_confronto');
     }
 
-    // O confronto decorrente no momento
+    /** O confronto decorrente no momento */
     function confronto()
     {
         return $this->hasOne(\App\Models\Confronto::class, 'id', 'id_confronto');

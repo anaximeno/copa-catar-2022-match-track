@@ -11,7 +11,7 @@ class Arbitro extends Model
 
     protected $table = 'arbitros';
 
-    // Retorna os confrontos em que o árbitro participou.
+    /** Retorna os confrontos em que o árbitro participou. */
     function confrontos()
     {
         return $this->hasMany(\App\Models\Arbitro::class, 'id_arbitro_principal');

@@ -11,19 +11,19 @@ class JogadorEmCampo extends Model
 
     protected $table = 'jogador_em_campo';
 
-    // Retorna o confronto em que o jogador está participando
+    /** Retorna o confronto em que o jogador está participando */
     function confronto()
     {
         return $this->hasOne(\App\Models\Confronto::class, 'id', 'id_confronto');
     }
 
-    // Retorna o jogador em campo.
+    /** Retorna o jogador em campo. */
     function jogador()
     {
         return $this->hasOne(\App\Models\Jogador::class, 'id', 'id_jogador');
     }
 
-    // Retorna a equipa do jogador
+    /** Retorna a equipa do jogador */
     function equipa()
     {
         return $this->hasOne(\App\Models\Equipa::class, 'id', 'id_equipa');
