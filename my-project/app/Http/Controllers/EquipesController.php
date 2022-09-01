@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Equipa;
 use Illuminate\Http\Request;
+use App\Models\Equipa;
 
-class EquipaController extends Controller
+class EquipesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,17 +14,7 @@ class EquipaController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Equipa::all();
     }
 
     /**
@@ -35,51 +25,45 @@ class EquipaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attrs = $request->only(['nome', 'simbolo', 'local_pertencente']);
+        return Equipa::create($attrs);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Equipa  $equipa
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Equipa $equipa)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Equipa  $equipa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Equipa $equipa)
-    {
-        //
+        return Equipa::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Equipa  $equipa
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Equipa $equipa)
+    public function update(Request $request, $id)
     {
-        //
+        $equipa = Equipa::findOrFail($id);
+        $attrs = $request->only(['nome', 'simbolo', 'local_pertencente']);
+        $equipa->update($attrs);
+        return $equipa;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Equipa  $equipa
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Equipa $equipa)
+    public function destroy($id)
     {
-        //
+        Equipa::findOrFail($id)->delete();
+        return response('', 204);
     }
 }
