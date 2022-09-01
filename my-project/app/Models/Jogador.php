@@ -11,6 +11,13 @@ class Jogador extends Model
 
     protected $table = 'jogadores';
 
+    protected $fillable = [
+        'nome',
+        'sobrenome',
+        'apelido',
+        'idade'
+    ];
+
     /** Retorna todos os contratos do jogador com os times. */
     function contratos()
     {
