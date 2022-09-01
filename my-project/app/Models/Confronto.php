@@ -20,7 +20,8 @@ class Confronto extends Model
         'id_equipa_casa',
         'id_equipa_visita',
         'id_arbitro_principal',
-        'rodada'
+        'rodada',
+        'terminou'
     ];
 
     /** Retorna o árbitro principal do jogo. */
