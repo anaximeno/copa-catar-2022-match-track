@@ -11,6 +11,12 @@ class Arbitro extends Model
 
     protected $table = 'arbitros';
 
+    protected $fillable = [
+        'nome',
+        'sobrenome',
+        'idade'
+    ];
+
     /** Retorna os confrontos em que o árbitro participou. */
     function confrontos()
     {
