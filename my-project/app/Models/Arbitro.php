@@ -9,5 +9,5 @@ class Arbitro extends Model
 {
     use HasFactory;
 
-    protected $table = 'arbitro';
+    protected $table = 'arbitros';
 }
