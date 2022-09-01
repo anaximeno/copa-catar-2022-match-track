@@ -20,16 +20,11 @@ return new class extends Migration
             $table->unsignedBigInteger('id_jogador');
             $table->unsignedBigInteger('id_equipa');
             $table->unsignedBigInteger('id_confronto');
-            $table->unsignedBigInteger('id_arbitro');
             $table->text('detalhes');
 
             $table->foreign(['id_jogador', 'id_equipa', 'id_confronto'])
                   ->references(['id_jogador', 'id_equipa', 'id_confronto'])
                   ->on('jogador_em_campo');
-
-            $table->foreign('id_arbitro')
-                  ->references('id')
-                  ->on('arbitros');
 
             $table->timestamps();
         });
