@@ -11,6 +11,15 @@ class Cartao extends Model
 
     protected $table = 'cartoes';
 
+    protected $fillable = [
+        'tempo_do_jogo',
+        'cor',
+        'id_jogador',
+        'id_equipa',
+        'id_confronto',
+        'detalhes'
+    ];
+
     /** O jogador que recebeu o cartão */
     function jogador()
     {
