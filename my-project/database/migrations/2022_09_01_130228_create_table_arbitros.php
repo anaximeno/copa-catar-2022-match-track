@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('arbitros', function (Blueprint $table) {
+        Schema::create('arbitros', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->string('sobrenome');
