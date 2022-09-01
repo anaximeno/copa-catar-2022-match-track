@@ -11,6 +11,13 @@ class JogadorContratado extends Model
 
     protected $table = 'jogadores_contratados';
 
+    protected $fillable = [
+        'inicio_do_contrato',
+        'fim_do_contrato',
+        'numero_da_camisa',
+        'posicao'
+    ];
+
     /** O jogador que foi contratado. */
     function jogador()
     {
