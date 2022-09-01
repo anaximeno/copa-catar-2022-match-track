@@ -11,6 +11,12 @@ class Equipa extends Model
 
     protected $table = 'equipes';
 
+    protected $fillable = [
+        'nome',
+        'simbolo',
+        'local_pertencente'
+    ];
+
     /** Retorna os contratos com os jogadores. */
     function jogadoresContratados()
     {
