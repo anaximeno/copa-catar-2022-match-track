@@ -26,4 +26,10 @@ class Jogador extends Model
     {
         return $this->hasOne(\App\Models\Equipa::class, 'id_equipa');
     }
+
+    /** Retorna os jogos que o jogador jogou. */
+    function jogosEmCampo()
+    {
+        return $this->hasMany(\App\Models\JogadorEmCampo::class, 'id_jogador');
+    }
 }
