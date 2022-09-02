@@ -18,9 +18,9 @@ class Equipa extends Model
     ];
 
     /** Retorna os contratos com os jogadores. */
-    function jogadoresContratados()
+    function jogadores()
     {
-        return $this->hasMany(\App\Models\JogadorContratado::class, 'id_equipa');
+        return $this->hasMany(\App\Models\Jogador::class, 'id_equipa');
     }
 
     /** Retorna os confrontos em casa da equipa. */
