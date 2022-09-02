@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Substituicao;
 use Illuminate\Http\Request;
+use App\Models\Substituicao;
 
 class SubstituicaoController extends Controller
 {
@@ -14,17 +14,7 @@ class SubstituicaoController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Substituicao::all();
     }
 
     /**
@@ -35,51 +25,55 @@ class SubstituicaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attrs = $request->only([
+            'id_jogador_saiu',
+            'id_jogador_entrou',
+            'id_equipa',
+            'id_confronto'
+        ]);
+        return Substituicao::create($attrs);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Substituicao  $substituicao
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Substituicao $substituicao)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Substituicao  $substituicao
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Substituicao $substituicao)
-    {
-        //
+        return Substituicao::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Substituicao  $substituicao
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Substituicao $substituicao)
+    public function update(Request $request, $id)
     {
-        //
+        $substituicao = Substituicao::findOrFail($id);
+        $attrs = $request->only([
+            'id_jogador_saiu',
+            'id_jogador_entrou',
+            'id_equipa',
+            'id_confronto'
+        ]);
+        $substituicao->update($attrs);
+        return $substituicao;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Substituicao  $substituicao
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Substituicao $substituicao)
+    public function destroy($id)
     {
-        //
+        Substituicao::findOrFail($id)->delete();
+        return response('', 204);
     }
 }
