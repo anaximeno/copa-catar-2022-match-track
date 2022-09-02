@@ -85,4 +85,23 @@ class EquipesController extends Controller
                      ->where('id', $id)
                      ->first();
     }
+
+    /**
+     * Mostra todos os confrontos da equipe.
+     */
+    public function confrontos($id_equipa)
+    {
+        return Equipa::findOrFail($id_equipa)->confrontos;
+    }
+
+    /**
+     * Mostra todos um confronto específico da equipe.
+     */
+    public function confronto($id_equipa, $id)
+    {
+        return Equipa::findOrFail($id_equipa)
+                     ->confrontos()
+                     ->where('id', $id)
+                     ->first();
+    }
 }
