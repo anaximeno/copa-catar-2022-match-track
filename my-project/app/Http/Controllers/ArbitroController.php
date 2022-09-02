@@ -66,4 +66,23 @@ class ArbitroController extends Controller
         Arbitro::findOrFail($id)->delete();
         return response('', 204);
     }
+
+    /**
+     * Mostra todos os confrontos em que o árbitro participou.
+     */
+    public function confrontos($id_equipa)
+    {
+        return Arbitro::findOrFail($id_equipa)->confrontos;
+    }
+
+    /**
+     * Mostra todos um confronto específico em que o árbitro participou.
+     */
+    public function confronto($id_equipa, $id)
+    {
+        return Arbitro::findOrFail($id_equipa)
+                      ->confrontos()
+                      ->where('id', $id)
+                      ->first();
+    }
 }
