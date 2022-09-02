@@ -26,19 +26,14 @@ class Equipa extends Model
     /** Retorna os confrontos em casa da equipa. */
     function confrontosEmCasa()
     {
-        return $this->hasMany(\App\Models\Confronto::class, 'id_equipa_casa');
+        return $this->hasMany(\App\Models\Confronto::class, 'id_equipa_casa', 'id');
     }
 
     /** Retorna os confrontos em visita da equipa. */
     function confrontosEmVisita()
     {
-        return $this->hasMany(\App\Models\Confronto::class, 'id_equipa_visita');
+        return $this->hasMany(\App\Models\Confronto::class, 'id_equipa_visita', 'id');
     }
-
-    // Retorna todos os confrontos da equipa
-    // function confrontos() // TODO
-    // {
-    // }
 
     /** Todas as substituições que ocorreram na equipa. */
     function substituicoes()
