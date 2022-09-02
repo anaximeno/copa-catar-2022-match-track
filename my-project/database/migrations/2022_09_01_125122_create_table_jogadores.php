@@ -17,8 +17,17 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('sobrenome');
-            $table->string('apelido');
-            $table->tinyInteger('idade', false, true);
+            $table->string('apelido')->nullable();
+            $table->unsignedTinyInteger('idade');
+            $table->unsignedBigInteger('id_equipa');
+            $table->string('posicao'); // pode ser extraido
+            $table->unsignedTinyInteger('numero_camisa');
+
+            $table->foreign('id_equipa')
+                  ->references('id')
+                  ->on('equipes')
+                  ->cascadeOnDelete();
+
             $table->timestamps();
         });
     }

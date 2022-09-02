@@ -16,15 +16,14 @@ return new class extends Migration
         Schema::create('cartoes', function (Blueprint $table) {
             $table->id();
             $table->dateTime('tempo_do_jogo');
-            $table->string('cor'); // NOTE: poderia ser extraído à sua tabela
-            $table->unsignedBigInteger('id_jogador');
-            $table->unsignedBigInteger('id_equipa');
-            $table->unsignedBigInteger('id_confronto');
-            $table->text('detalhes');
+            $table->unsignedBigInteger('id_jogador_em_campo');
+            $table->string('cor', 12); // poderia ser extraído à sua tabela
+            $table->text('detalhes')->nullable();
 
-            $table->foreign(['id_jogador', 'id_equipa', 'id_confronto'])
-                  ->references(['id_jogador', 'id_equipa', 'id_confronto'])
-                  ->on('jogador_em_campo');
+            $table->foreign('id_jogador_em_campo')
+                  ->references('id')
+                  ->on('jogador_em_campo')
+                  ->cascadeOnDelete();
 
             $table->timestamps();
         });

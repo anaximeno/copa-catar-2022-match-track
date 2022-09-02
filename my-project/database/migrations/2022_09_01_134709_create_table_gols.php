@@ -15,15 +15,14 @@ return new class extends Migration
     {
         Schema::create('gols', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_jogador_em_campo');
             $table->dateTime('tempo_do_jogo');
-            $table->unsignedBigInteger('id_jogador');
-            $table->unsignedBigInteger('id_equipa');
-            $table->unsignedBigInteger('id_confronto');
             $table->text('detalhes')->nullable();
 
-            $table->foreign(['id_jogador', 'id_equipa', 'id_confronto'])
-                  ->references(['id_jogador', 'id_equipa', 'id_confronto'])
-                  ->on('jogador_em_campo');
+            $table->foreign('id_jogador_em_campo')
+                  ->references('id')
+                  ->on('jogador_em_campo')
+                  ->cascadeOnDelete();
 
             $table->timestamps();
         });

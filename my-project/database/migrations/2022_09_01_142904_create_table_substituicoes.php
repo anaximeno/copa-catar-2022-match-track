@@ -14,29 +14,32 @@ return new class extends Migration
     public function up()
     {
         Schema::create('substituicoes', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_jogador_sai');
+            $table->id();
+            $table->unsignedBigInteger('id_jogador_saiu');
+            $table->unsignedBigInteger('id_jogador_entrou');
             $table->unsignedBigInteger('id_equipa');
             $table->unsignedBigInteger('id_confronto');
-            $table->unsignedBigInteger('id_jogador_entra');
-            $table->dateTime('tempo_de_jogo');
+            $table->dateTime('tempo_do_jogo');
 
-            $table->foreign(['id_jogador_sai', 'id_equipa', 'id_confronto'], 'fk_jogador_substituido')
-                  ->references(['id_jogador', 'id_equipa', 'id_confronto'])
-                  ->on('jogador_em_campo');
+            $table->foreign('id_jogador_saiu')
+                  ->references('id')
+                  ->on('jogadores')
+                  ->cascadeOnDelete();
 
-            $table->foreign(['id_jogador_entra', 'id_equipa'], 'fk_jogodar_entra_em_campo')
-                ->references(['id_jogador', 'id_equipa'])
-                ->on('jogadores_contratados');
+            $table->foreign('id_jogador_entrou')
+                  ->references('id')
+                  ->on('jogadores')
+                  ->cascadeOnDelete();
 
-            // NOTE: Aqui a coluna id_equipa vai ter duas restrições de chave estrangeira,
-            // - Uma com a tabela jogador_em_campo
-            // - Outra com a tabela jogadores_contratados
-            // Sendo assim, a equipe do jogador que sai de campo deve ser do mesmo tipo do que entra.
+            $table->foreign('id_equipa')
+                  ->references('id')
+                  ->on('equipes')
+                  ->cascadeOnDelete();
 
-            $table->primary(
-                ['id_jogador_sai', 'id_equipa', 'id_confronto', 'id_jogador_entra'],
-                'pk_substituicao_de_jogador_em_campo'
-            );
+            $table->foreign('id_confronto')
+                  ->references('id')
+                  ->on('confrontos')
+                  ->cascadeOnDelete();
 
             $table->timestamps();
         });

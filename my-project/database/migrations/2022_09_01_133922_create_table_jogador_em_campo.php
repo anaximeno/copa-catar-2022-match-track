@@ -14,21 +14,21 @@ return new class extends Migration
     public function up()
     {
         Schema::create('jogador_em_campo', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('id_jogador');
-            $table->unsignedBigInteger('id_equipa');
             $table->unsignedBigInteger('id_confronto');
             $table->dateTime('tempo_de_entrada');
             $table->dateTime('tempo_de_saida')->nullable();
 
-            $table->foreign(['id_jogador', 'id_equipa'])
-                  ->references(['id_jogador', 'id_equipa'])
-                  ->on('jogadores_contratados');
+            $table->foreign('id_jogador')
+                  ->references('id')
+                  ->on('jogadores')
+                  ->cascadeOnDelete();
 
             $table->foreign('id_confronto')
                   ->references('id')
-                  ->on('confrontos');
-
-            $table->primary(['id_jogador', 'id_equipa', 'id_confronto']);
+                  ->on('confrontos')
+                  ->cascadeOnDelete();
 
             $table->timestamps();
         });
