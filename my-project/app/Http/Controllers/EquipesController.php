@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Equipa;
+use Illuminate\Database\Eloquent\Collection;
 
 class EquipesController extends Controller
 {
@@ -91,17 +92,10 @@ class EquipesController extends Controller
      */
     public function confrontos($id_equipa)
     {
-        return Equipa::findOrFail($id_equipa)->confrontos;
-    }
-
-    /**
-     * Mostra todos um confronto específico da equipe.
-     */
-    public function confronto($id_equipa, $id)
-    {
-        return Equipa::findOrFail($id_equipa)
-                     ->confrontos()
-                     ->where('id', $id)
-                     ->first();
+        $equipa = Equipa::findOrFail($id_equipa);
+        return new Collection([
+            'casa' => $equipa->confrontosEmCasa()->get(),
+            'visita' => $equipa->confrontosEmVisita()->get()
+        ]);
     }
 }
