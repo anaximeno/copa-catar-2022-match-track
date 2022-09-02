@@ -30,6 +30,8 @@ return new class extends Migration
                   ->on('confrontos')
                   ->cascadeOnDelete();
 
+            $table->unique(['id_jogador', 'id_confronto']);
+
             $table->timestamps();
         });
     }
