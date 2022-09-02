@@ -31,6 +31,7 @@ class SubstituicaoController extends Controller
             'id_equipa',
             'id_confronto'
         ]);
+        //TODO: update jogadores em campo
         return Substituicao::create($attrs);
     }
 
@@ -62,6 +63,7 @@ class SubstituicaoController extends Controller
             'id_confronto'
         ]);
         $substituicao->update($attrs);
+        //TODO: update jogadores em campo
         return $substituicao;
     }
 
