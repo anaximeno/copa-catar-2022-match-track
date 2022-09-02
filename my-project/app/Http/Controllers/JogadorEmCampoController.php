@@ -12,19 +12,9 @@ class JogadorEmCampoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id_confronto)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return JogadorEmCampo::all()->where('id_confronto', $id_confronto);
     }
 
     /**
@@ -33,53 +23,49 @@ class JogadorEmCampoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id_confronto)
     {
-        //
+        $attrs = $request->only(['id_jogador', 'tempo_de_entrada', 'tempo_de_saida']);
+        $attrs['id_confronto'] = $id_confronto;
+        return JogadorEmCampo::create($attrs);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\JogadorEmCampo  $jogadorEmCampo
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(JogadorEmCampo $jogadorEmCampo)
+    public function show($id_confronto, $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\JogadorEmCampo  $jogadorEmCampo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(JogadorEmCampo $jogadorEmCampo)
-    {
-        //
+        return JogadorEmCampo::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\JogadorEmCampo  $jogadorEmCampo
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, JogadorEmCampo $jogadorEmCampo)
+    public function update(Request $request, $id_confronto, $id)
     {
-        //
+        $jogadorEmCampo = JogadorEmCampo::findOrFail($id);
+        $attrs = $request->only(['id_jogador', 'tempo_de_entrada', 'tempo_de_saida']);
+        $attrs['id_confronto'] = $id_confronto;
+        $jogadorEmCampo->update($attrs);
+        return $jogadorEmCampo;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\JogadorEmCampo  $jogadorEmCampo
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JogadorEmCampo $jogadorEmCampo)
+    public function destroy($id_confronto, $id)
     {
-        //
+        JogadorEmCampo::findOrFail($id)->delete();
+        return response('', 204);
     }
 }

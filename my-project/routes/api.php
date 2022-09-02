@@ -24,4 +24,5 @@ Route::prefix('v1')->group(function() {
     Route::apiResource('arbitros', \App\Http\Controllers\ArbitroController::class);
     Route::apiResource('confrontos', \App\Http\Controllers\ConfrontoController::class);
     Route::apiResource('substituicoes', \App\Http\Controllers\SubstituicaoController::class);
+    Route::apiResource('confrontos/{id_confronto}/jogadores', \App\Http\Controllers\JogadorEmCampoController::class);
 });
