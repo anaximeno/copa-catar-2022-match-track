@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gol;
 use Illuminate\Http\Request;
+use App\Models\Gol;
 
-class GolController extends Controller
+class GolsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,17 +14,7 @@ class GolController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Gol::all();
     }
 
     /**
@@ -35,51 +25,45 @@ class GolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attrs = $request->only(['tempo_do_jogo', 'id_jogador_em_campo', 'detalhes']);
+        return Gol::create($attrs);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Gol  $gol
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Gol $gol)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Gol  $gol
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Gol $gol)
-    {
-        //
+        return Gol::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Gol  $gol
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Gol $gol)
+    public function update(Request $request, $id)
     {
-        //
+        $gol = Gol::findOrFail($id);
+        $attrs = $request->only(['tempo_do_jogo', 'id_jogador_em_campo', 'detalhes']);
+        $gol->update($attrs);
+        return $gol;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Gol  $gol
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Gol $gol)
+    public function destroy($id)
     {
-        //
+        Gol::findOrFail($id)->delete();
+        return response('', 204);
     }
 }
