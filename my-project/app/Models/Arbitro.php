@@ -20,6 +20,6 @@ class Arbitro extends Model
     /** Retorna os confrontos em que o árbitro participou. */
     function confrontos()
     {
-        return $this->hasMany(\App\Models\Arbitro::class, 'id_arbitro_principal');
+        return $this->hasMany(\App\Models\Confronto::class, 'id_arbitro_principal');
     }
 }
