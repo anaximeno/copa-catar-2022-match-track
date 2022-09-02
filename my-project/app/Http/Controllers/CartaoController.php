@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cartao;
 use Illuminate\Http\Request;
+use App\Models\Cartao;
 
 class CartaoController extends Controller
 {
@@ -14,17 +14,7 @@ class CartaoController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Cartao::all();
     }
 
     /**
@@ -35,51 +25,49 @@ class CartaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attrs = $request->only(
+            ['tempo_do_jogo', 'id_jogador_em_campo', 'detalhes', 'cor']
+        );
+        return Cartao::create($attrs);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cartao  $cartao
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Cartao $cartao)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Cartao  $cartao
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Cartao $cartao)
-    {
-        //
+        return Cartao::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cartao  $cartao
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cartao $cartao)
+    public function update(Request $request, $id)
     {
-        //
+        $cartao = Cartao::findOrFail($id);
+        $attrs = $request->only(
+            ['tempo_do_jogo', 'id_jogador_em_campo', 'detalhes', 'cor']
+        );
+        $cartao->update($attrs);
+        return $cartao;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cartao  $cartao
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cartao $cartao)
+    public function destroy($id)
     {
-        //
+        Cartao::findOrFail($id)->delete();
+        return response('', 204);
     }
 }
