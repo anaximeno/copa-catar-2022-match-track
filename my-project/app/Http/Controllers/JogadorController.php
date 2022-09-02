@@ -25,7 +25,9 @@ class JogadorController extends Controller
      */
     public function store(Request $request)
     {
-        $attrs = $request->only(['nome', 'sobrenome', 'apelido', 'idade']);
+        $attrs = $request->only(
+            ['nome', 'sobrenome', 'apelido', 'idade', 'id_equipa', 'posicao', 'numero_camisa']
+        );
         return Jogador::create($attrs);
     }
 
@@ -49,7 +51,9 @@ class JogadorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $attrs = $request->only(['nome', 'sobrenome', 'apelido', 'idade']);
+        $attrs = $request->only(
+            ['nome', 'sobrenome', 'apelido', 'idade', 'id_equipa', 'posicao', 'numero_camisa']
+        );
         $jogador = Jogador::findOrFail($id);
         $jogador->update($attrs);
         return $jogador;
