@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Confronto;
+use Illuminate\Database\Eloquent\Collection;
 
 class ConfrontoController extends Controller
 {
@@ -87,5 +88,54 @@ class ConfrontoController extends Controller
     {
         Confronto::findOrFail($id)->delete();
         return response('', 204);
+    }
+
+    /** Mostra o registro dos confrontos */
+    public function registros($id_confronto)
+    {
+        $confronto = Confronto::findOrFail($id_confronto);
+
+        $formatEquipes = function($equipa) use(&$confronto) {
+            $jogadores = $confronto
+                ->jogadoresEmCampo()
+                ->get()
+                ->map(function($jogadorEmCampo) {
+                    return $jogadorEmCampo->jogador;
+                })
+                ->filter(function($jogador) use(&$equipa) {
+                    return $jogador->id_equipa == $equipa->id;
+                })
+                ;
+
+            return new Collection([
+                'id' => $equipa->id,
+                'nome' => $equipa->nome,
+                'simbolo' => $equipa->simbolo,
+                'local_pertencente' => $equipa->local_pertencente,
+                'jogadores_em_campo' => $jogadores,
+                //'gols' => /* TODO */,
+                //'substituicoes' => /* TODO */,
+                //'cartoes' => /* TODO */,
+            ]);
+        };
+
+        return new Collection([
+            'confronto' => [
+                'id' => $confronto->id,
+                'local' => $confronto->local,
+                'dia' => $confronto->dia,
+                'inicio' => $confronto->inicio,
+                'fim' => $confronto->fim,
+                'rodada' => $confronto->rodada,
+                'estadio' => $confronto->estadio,
+                'local' => $confronto->local,
+                'arbitro' => $confronto->arbitro,
+                'terminou' => $confronto->terminou,
+                'equipes' => [
+                    'casa' => $formatEquipes($confronto->equipaCasa),
+                    'visita' => $formatEquipes($confronto->equipaVisita)
+                ]
+            ]
+        ]);
     }
 }
