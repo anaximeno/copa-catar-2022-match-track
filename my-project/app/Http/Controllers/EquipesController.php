@@ -66,4 +66,23 @@ class EquipesController extends Controller
         Equipa::findOrFail($id)->delete();
         return response('', 204);
     }
+
+    /**
+     * Mostra todos os jogadores da equipe.
+     */
+    public function jogadores($id_equipa)
+    {
+        return Equipa::findOrFail($id_equipa)->jogadores;
+    }
+
+    /**
+     * Mostra um jogador específico da Equipe.
+     */
+    public function jogador($id_equipa, $id)
+    {
+        return Equipa::findOrFail($id_equipa)
+                     ->jogadores()
+                     ->where('id', $id)
+                     ->first();
+    }
 }

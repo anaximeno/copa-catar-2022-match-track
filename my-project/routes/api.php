@@ -27,4 +27,12 @@ Route::prefix('v1')->group(function() {
     Route::apiResource('confrontos/{id_confronto}/jogadores', \App\Http\Controllers\JogadorEmCampoController::class);
     Route::apiResource('gols', \App\Http\Controllers\GolsController::class);
     Route::apiResource('cartoes', \App\Http\Controllers\CartaoController::class);
+
+    Route::get('equipes/{id_equipa}/jogadores',
+        [\App\Http\Controllers\EquipesController::class, 'jogadores'
+    ]);
+    Route::get('equipes/{id_equipa}/jogadores/{id}',
+        [\App\Http\Controllers\EquipesController::class, 'jogador'
+    ]);
+
 });
