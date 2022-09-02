@@ -17,7 +17,8 @@ class Jogador extends Model
         'apelido',
         'idade',
         'id_equipa',
-        'id_confronto'
+        'posicao',
+        'numero_camisa',
     ];
 
     /** Retorna a equipa do jogador. */
