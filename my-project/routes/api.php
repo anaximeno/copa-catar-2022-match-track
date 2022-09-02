@@ -29,18 +29,18 @@ Route::prefix('v1')->group(function() {
     Route::apiResource('cartoes', \App\Http\Controllers\CartaoController::class);
 
     Route::get('equipes/{id_equipa}/jogadores',
-        [\App\Http\Controllers\EquipesController::class, 'jogadores'
-    ]);
+        [\App\Http\Controllers\EquipesController::class, 'jogadores']
+    );
     Route::get('equipes/{id_equipa}/jogadores/{id}',
-        [\App\Http\Controllers\EquipesController::class, 'jogador'
-    ]);
+        [\App\Http\Controllers\EquipesController::class, 'jogador']
+    );
     Route::get('equipes/{id_equipa}/confrontos',
-        [\App\Http\Controllers\EquipesController::class, 'confrontos'
-    ]);
+        [\App\Http\Controllers\EquipesController::class, 'confrontos']
+    );
     Route::get('arbitros/{id_arbitro}/confrontos',
-        [\App\Http\Controllers\ArbitroController::class, 'confrontos'
-    ]);
+        [\App\Http\Controllers\ArbitroController::class, 'confrontos']
+    );
     Route::get('arbitros/{id_arbitro}/confrontos/{id}',
-        [\App\Http\Controllers\ArbitroController::class, 'confronto'
-    ]);
+        [\App\Http\Controllers\ArbitroController::class, 'confronto']
+    );
 });
