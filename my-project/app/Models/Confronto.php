@@ -45,6 +45,6 @@ class Confronto extends Model
     /** Os jogadores que estão ou estiveram em campo. */
     function jogadoresEmCampo()
     {
-        return $this->hasMany(\App\Models\JogadorEmCampo::class, 'id', 'id_confronto');
+        return $this->hasMany(\App\Models\JogadorEmCampo::class, 'id_confronto');
     }
 }
