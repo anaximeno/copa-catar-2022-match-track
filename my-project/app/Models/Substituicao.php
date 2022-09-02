@@ -18,13 +18,13 @@ class Substituicao extends Model
     /** O jogador que saiu */
     function jogadorQueSaiu()
     {
-        return $this->hasOne(\App\Models\Jogador::class, 'id', 'id_jogador_sai');
+        return $this->hasOne(\App\Models\Jogador::class, 'id', 'id_jogador_saiu');
     }
 
     /** O jogador que entrou */
     function jogadorQueEntrou()
     {
-        return $this->hasOne(\App\Models\Jogador::class, 'id', 'id_jogador_entra');
+        return $this->hasOne(\App\Models\Jogador::class, 'id', 'id_jogador_entrou');
     }
 
     /** A equipa em que a substituição foi feita */

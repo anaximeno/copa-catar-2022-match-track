@@ -17,7 +17,7 @@ class Equipa extends Model
         'local_pertencente'
     ];
 
-    /** Retorna os contratos com os jogadores. */
+    /** Retorna os jogadores da equipa. */
     function jogadores()
     {
         return $this->hasMany(\App\Models\Jogador::class, 'id_equipa');
@@ -39,4 +39,10 @@ class Equipa extends Model
     // function confrontos() // TODO
     // {
     // }
+
+    /** Todas as substituições que ocorreram na equipa. */
+    function substituicoes()
+    {
+        return $this->hasMany(\App\Models\Substituicao::class, 'id_equipa');
+    }
 }

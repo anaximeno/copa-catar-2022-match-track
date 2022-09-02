@@ -12,29 +12,41 @@ class Cartao extends Model
     protected $table = 'cartoes';
 
     protected $fillable = [
-        'tempo_do_jogo',
+        'id_jogador_em_campo',
         'cor',
-        'id_jogador',
-        'id_equipa',
-        'id_confronto',
+        'tempo_do_jogo',
         'detalhes'
     ];
 
-    /** O jogador que recebeu o cartão */
+    /** O jogador que marcou o golo */
     function jogador()
     {
-        return $this->hasOne(\App\Models\Jogador::class, 'id', 'id_jogador');
+        return $this->hasOneThrough(
+            \App\Models\Jogador::class,
+            \App\Models\JogadorEmCampo::class,
+            'id',
+            'id',
+            'id_jogador_em_campo',
+            'id_jogador'
+        );
     }
 
-    /** A equipa que recebeu cartão */
+    /** A equipa que marcou o golo */
     function equipa()
     {
-        return $this->hasOne(\App\Models\Confronto::class, 'id', 'id_confronto');
+        return $this->jogador()->equipa;
     }
 
     /** O confronto decorrente no momento */
     function confronto()
     {
-        return $this->hasOne(\App\Models\Confronto::class, 'id', 'id_confronto');
+        return $this->hasOneThrough(
+            \App\Models\Confronto::class,
+            \App\Models\JogadorEmCampo::class,
+            'id',
+            'id',
+            'id_jogador_em_campo',
+            'id_confronto'
+        );
     }
 }

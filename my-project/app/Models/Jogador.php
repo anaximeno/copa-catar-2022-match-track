@@ -15,12 +15,14 @@ class Jogador extends Model
         'nome',
         'sobrenome',
         'apelido',
-        'idade'
+        'idade',
+        'id_equipa',
+        'id_confronto'
     ];
 
-    /** Retorna todos os contratos do jogador com os times. */
-    function contratos()
+    /** Retorna a equipa do jogador. */
+    function equipa()
     {
-        return $this->hasMany(\App\Models\JogadorContratado::class, 'id_jogador');
+        return $this->hasOne(\App\Models\Equipa::class, 'id_equipa');
     }
 }
