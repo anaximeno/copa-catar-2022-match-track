@@ -60,4 +60,10 @@ class Confronto extends Model
             'id'
         );
     }
+
+    /** Retorna as substituições que ocorreram no confronto. */
+    function substituicoes()
+    {
+        return $this->hasMany(\App\Models\Substituicao::class, 'id_confronto');
+    }
 }

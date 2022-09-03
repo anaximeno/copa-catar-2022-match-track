@@ -95,7 +95,8 @@ class ConfrontoController extends Controller
     {
         $confronto = Confronto::findOrFail($id_confronto);
 
-        $formatEquipes = function($equipa) use(&$confronto) {
+        $formatEquipes = function($equipa) use(&$confronto)
+        {
             $jogadores = $confronto
                 ->jogadoresEmCampo()
                 ->get()
@@ -110,6 +111,8 @@ class ConfrontoController extends Controller
                 return $gol->jogador->id_equipa == $equipa->id;
             });
 
+            $substituicoes = $confronto->substituicoes->where('id_equipa', $equipa->id);
+
             return new Collection([
                 'id' => $equipa->id,
                 'nome' => $equipa->nome,
@@ -117,7 +120,7 @@ class ConfrontoController extends Controller
                 'local_pertencente' => $equipa->local_pertencente,
                 'jogadores_em_campo' => $jogadores,
                 'gols' => $gols,
-                //'substituicoes' => /* TODO */,
+                'substituicoes' => $substituicoes,
                 //'cartoes' => /* TODO */,
             ]);
         };
