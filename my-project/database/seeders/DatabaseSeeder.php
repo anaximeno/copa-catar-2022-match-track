@@ -97,7 +97,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->seed();
+        for ($i = 0 ; $i < 10 ; $i += 1) {
+            $this->seed();
+        }
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
