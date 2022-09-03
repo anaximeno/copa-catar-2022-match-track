@@ -66,4 +66,17 @@ class Confronto extends Model
     {
         return $this->hasMany(\App\Models\Substituicao::class, 'id_confronto');
     }
+
+    /** Retorna os cartões que foram aplicados em campo. */
+    function cartoes()
+    {
+        return $this->hasManyThrough(
+            \App\Models\Cartao::class,
+            \App\Models\JogadorEmCampo::class,
+            'id_confronto',
+            'id_jogador_em_campo',
+            'id',
+            'id'
+        );
+    }
 }

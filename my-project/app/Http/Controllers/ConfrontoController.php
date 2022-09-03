@@ -111,6 +111,10 @@ class ConfrontoController extends Controller
                 return $gol->jogador->id_equipa == $equipa->id;
             });
 
+            $cartoes = $confronto->cartoes->filter(function($cartao) use(&$equipa) {
+                return $cartao->jogador->id_equipa == $equipa->id;
+            });
+
             $substituicoes = $confronto->substituicoes->where('id_equipa', $equipa->id);
 
             return new Collection([
@@ -121,7 +125,7 @@ class ConfrontoController extends Controller
                 'jogadores_em_campo' => $jogadores,
                 'gols' => $gols,
                 'substituicoes' => $substituicoes,
-                //'cartoes' => /* TODO */,
+                'cartoes' => $cartoes,
             ]);
         };
 
