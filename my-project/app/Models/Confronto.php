@@ -47,4 +47,17 @@ class Confronto extends Model
     {
         return $this->hasMany(\App\Models\JogadorEmCampo::class, 'id_confronto');
     }
+
+    /** Retorna todos os gols marcados durante este confronto. */
+    function gols()
+    {
+        return $this->hasManyThrough(
+            \App\Models\Gol::class,
+            \App\Models\JogadorEmCampo::class,
+            'id_confronto',
+            'id_jogador_em_campo',
+            'id',
+            'id'
+        );
+    }
 }

@@ -99,13 +99,15 @@ class ConfrontoController extends Controller
             $jogadores = $confronto
                 ->jogadoresEmCampo()
                 ->get()
-                ->map(function($jogadorEmCampo) {
-                    return $jogadorEmCampo->jogador;
-                })
-                ->filter(function($jogador) use(&$equipa) {
-                    return $jogador->id_equipa == $equipa->id;
-                })
-                ;
+            ->map(function($jogadorEmCampo) {
+                return $jogadorEmCampo->jogador;
+            })->filter(function($jogador) use(&$equipa) {
+                return $jogador->id_equipa == $equipa->id;
+            });
+
+            $gols = $confronto->gols->filter(function($gol) use(&$equipa) {
+                return $gol->jogador->id_equipa == $equipa->id;
+            });
 
             return new Collection([
                 'id' => $equipa->id,
@@ -113,7 +115,7 @@ class ConfrontoController extends Controller
                 'simbolo' => $equipa->simbolo,
                 'local_pertencente' => $equipa->local_pertencente,
                 'jogadores_em_campo' => $jogadores,
-                //'gols' => /* TODO */,
+                'gols' => $gols,
                 //'substituicoes' => /* TODO */,
                 //'cartoes' => /* TODO */,
             ]);
