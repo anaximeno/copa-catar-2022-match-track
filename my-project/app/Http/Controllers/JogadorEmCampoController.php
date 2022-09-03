@@ -14,7 +14,11 @@ class JogadorEmCampoController extends Controller
      */
     public function index($id_confronto)
     {
-        return JogadorEmCampo::all()->where('id_confronto', $id_confronto);
+        $jogadores = JogadorEmCampo::all()->where('id_confronto', $id_confronto);
+        $jogadores = $jogadores->map(function($jogadorEmCampo) {
+            return $jogadorEmCampo->jogador;
+        });
+        return $jogadores;
     }
 
     /**
@@ -38,7 +42,7 @@ class JogadorEmCampoController extends Controller
      */
     public function show($id_confronto, $id)
     {
-        return JogadorEmCampo::findOrFail($id);
+        return JogadorEmCampo::findOrFail($id)->jogador;
     }
 
     /**
