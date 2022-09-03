@@ -8,6 +8,7 @@ use App\Models\Arbitro;
 use App\Models\Confronto;
 use Illuminate\Database\Seeder;
 use App\Models\Equipa;
+use App\Models\Gol;
 use App\Models\Jogador;
 use App\Models\JogadorEmCampo;
 
@@ -32,18 +33,27 @@ class DatabaseSeeder extends Seeder
             'id_arbitro_principal' => $arbitro->id,
         ])->create()->first();
 
-        foreach($equipa1->jogadores as $jogador) {
+        $criarJogadorEmCampo = function($jogador) use (&$confronto) {
             $jogadorEmCampo = JogadorEmCampo::factory(1)->state([
                 'id_jogador' => $jogador->id,
                 'id_confronto' => $confronto->id,
             ])->create()->first();
-        }
 
-        foreach($equipa2->jogadores as $jogador) {
-            $jogadorEmCampo = JogadorEmCampo::factory(1)->state([
-                'id_jogador' => $jogador->id,
-                'id_confronto' => $confronto->id,
-            ])->create()->first();
+            for ($i = 0 ; $i < 4 ; $i += 1) {
+                if (fake()->numberBetween(0, 90) < 22) { // `22/90` -> chance hipotética de marcar um golo
+                    $gol = Gol::factory(1)->state([
+                        'id_jogador_em_campo' => $jogadorEmCampo->id,
+                    ])->create()->first();
+                }
+            }
+
+            return $jogadorEmCampo;
+        };
+
+        $limit = min(count($equipa1->jogadores), count($equipa2->jogadores));
+        for ($i = 0 ; $i < $limit ; $i += 1) {
+            $criarJogadorEmCampo($equipa1->jogadores[$i]);
+            $criarJogadorEmCampo($equipa2->jogadores[$i]);
         }
     }
 
