@@ -12,10 +12,12 @@ use App\Models\Equipa;
 use App\Models\Gol;
 use App\Models\Jogador;
 use App\Models\JogadorEmCampo;
+use App\Models\Substituicao;
 
 class DatabaseSeeder extends Seeder
 {
-    private function seedEquipa() {
+    private function seedEquipa()
+    {
         return Equipa::factory(1)->has(
             Jogador::factory(22)->state(function($attributes, Equipa $equipa) {
                 return [ 'id_equipa' => $equipa->id ];
@@ -24,7 +26,14 @@ class DatabaseSeeder extends Seeder
         )->create();
     }
 
-    private function seed() {
+    /** Evento `aleatório` com a probabilidade de laplace de $num/$denum */
+    private function prob(int $num, int $denum)
+    {
+        return (fake()->numberBetween(0, $denum) < $num);
+    }
+
+    private function seed()
+    {
         $arbitro = Arbitro::factory(1)->create()->first();
         $equipa1 = $this->seedEquipa()->first();
         $equipa2 = $this->seedEquipa()->first();
@@ -41,14 +50,14 @@ class DatabaseSeeder extends Seeder
             ])->create()->first();
 
             for ($i = 0 ; $i < 4 ; $i += 1) {
-                if (fake()->numberBetween(0, 90) < 22) { // `22/90` -> chance hipotética de marcar um golo
+                if ($this->prob(22, 90)) { // `22/90` -> chance hipotética de marcar um golo
                     $gol = Gol::factory(1)->state([
                         'id_jogador_em_campo' => $jogadorEmCampo->id,
                     ])->create()->first();
                 }
             }
 
-            if (fake()->numberBetween(0, 90) < 11) { // `11/90` -> chance hipotética de receber um cartao
+            if ($this->prob(11, 90)) { // `11/90` -> chance hipotética de receber um cartao
                 $gol = Cartao::factory(1)->state([
                     'id_jogador_em_campo' => $jogadorEmCampo->id,
                 ])->create()->first();
@@ -57,10 +66,27 @@ class DatabaseSeeder extends Seeder
             return $jogadorEmCampo;
         };
 
+        $fazerSubstituicao = function($equipa, $jogador1, $jogador2) use(&$confronto) {
+            //assert($jogador1->id_equipa == $jogador2->id_equipa);
+            if ($this->prob(2, 22)) {
+                $subtituicao = Substituicao::factory(1)->state([
+                    'id_jogador_saiu' => $jogador1->id,
+                    'id_jogador_entrou' => $jogador2->id,
+                    'id_equipa' => $equipa->id,
+                    'id_confronto' => $confronto->id,
+                ])->create()->first();
+            }
+        };
+
         $limit = min(count($equipa1->jogadores), count($equipa2->jogadores));
         for ($i = 0 ; $i < $limit ; $i += 1) {
             $criarJogadorEmCampo($equipa1->jogadores[$i]);
             $criarJogadorEmCampo($equipa2->jogadores[$i]);
+
+            if ($i + 1 < $limit) {
+                $fazerSubstituicao($equipa1, $equipa1->jogadores[$i], $equipa1->jogadores[$i + 1]);
+                $fazerSubstituicao($equipa2, $equipa2->jogadores[$i], $equipa2->jogadores[$i + 1]);
+            }
         }
     }
 
