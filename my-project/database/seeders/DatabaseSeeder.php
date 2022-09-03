@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Arbitro;
+use App\Models\Cartao;
 use App\Models\Confronto;
 use Illuminate\Database\Seeder;
 use App\Models\Equipa;
@@ -45,6 +46,12 @@ class DatabaseSeeder extends Seeder
                         'id_jogador_em_campo' => $jogadorEmCampo->id,
                     ])->create()->first();
                 }
+            }
+
+            if (fake()->numberBetween(0, 90) < 11) { // `11/90` -> chance hipotética de receber um cartao
+                $gol = Cartao::factory(1)->state([
+                    'id_jogador_em_campo' => $jogadorEmCampo->id,
+                ])->create()->first();
             }
 
             return $jogadorEmCampo;
