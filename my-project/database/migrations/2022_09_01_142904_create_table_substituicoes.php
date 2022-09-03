@@ -41,7 +41,10 @@ return new class extends Migration
                   ->on('confrontos')
                   ->cascadeOnDelete();
 
-            $table->unique(['id_jogador_saiu', 'id_jogador_entrou', 'id_jogador_equipa', 'id_confronto']);
+            $table->unique(
+                ['id_jogador_saiu', 'id_jogador_entrou', 'id_equipa', 'id_confronto'],
+                'unique_substituicao_per_player'
+            );
 
             $table->timestamps();
         });
