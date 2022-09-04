@@ -14,21 +14,47 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: const MyHomePage(title: 'Copa Catar 2022 - Match Tracker'),
+      home: const MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  final String title;
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
-  const MyHomePage({super.key, this.title = 'My Homepage'});
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+
+  static const List<Widget> _sections = <Widget>[
+    Text('Index 0: Confrontos'),
+    Text('Index 1: Equipes'),
+    Text('Index 2: Sobre'),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: const Center(child: Text('Hello Flutter')),
+      body: Center(child: _sections.elementAt(_selectedIndex)),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.sports_soccer), label: 'Confrontos'),
+          BottomNavigationBarItem(icon: Icon(Icons.sports_kabaddi_sharp), label: 'Equipes'),
+          BottomNavigationBarItem(icon: Icon(Icons.question_mark), label: 'Sobre'),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.purple[800],
+        onTap: _onItemTapped
+      ),
     );
   }
 }
