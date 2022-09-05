@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'equipes/equipes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,7 +13,7 @@ class _HomePageState extends State<HomePage> {
 
   static const List<Widget> _sections = <Widget>[
     Text('Index 0: Confrontos'),
-    Text('Index 1: Equipes'),
+    ViewEquipes(),
     Text('Index 2: Sobre'),
   ];
 
@@ -27,15 +28,17 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Center(child: _sections.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.sports_soccer), label: 'Confrontos'),
-          BottomNavigationBarItem(icon: Icon(Icons.sports_kabaddi_sharp), label: 'Equipes'),
-          BottomNavigationBarItem(icon: Icon(Icons.question_mark), label: 'Sobre'),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.purple[800],
-        onTap: _onItemTapped
-      ),
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Icon(Icons.sports_soccer), label: 'Confrontos'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.sports_kabaddi_sharp), label: 'Equipes'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.question_mark), label: 'Sobre'),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.purple[800],
+          onTap: _onItemTapped),
     );
   }
 }
