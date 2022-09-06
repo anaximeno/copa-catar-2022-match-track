@@ -17,7 +17,7 @@ class JogadorController extends Controller
             'apelido' => $jogador->apelido,
             'idade' => $jogador->idade,
             'posicao' => $jogador->posicao,
-            'numero_camisa' => $jogador->nome,
+            'numero_camisa' => $jogador->numero_camisa,
             'equipa' => $jogador->equipa,
             'cartoes' => $jogador->cartoes,
             'gols' => $jogador->cartoes,
