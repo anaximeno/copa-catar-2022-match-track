@@ -4,9 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Gol;
+use Illuminate\Database\Eloquent\Collection;
 
 class GolsController extends Controller
 {
+    function formatGol($gol)
+    {
+        $confronto = $gol->confronto;
+
+        return new Collection([
+            'id' => $gol->id,
+            'tempo_do_jogo' => $gol->tempo_do_jogo,
+            'confronto' => [
+                'id' => $confronto->id,
+                'local' => $confronto->local,
+                'estadio' => $confronto->estadio,
+                'dia' => $confronto->dia,
+                'equipes' => [
+                    'casa' => $confronto->equipaCasa,
+                    'visita' => $confronto->equipaVisita,
+                ],
+            ],
+            'equipa' => $gol->jogador->equipa,
+            'jogador' => $gol->jogador,
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +37,9 @@ class GolsController extends Controller
      */
     public function index()
     {
-        return Gol::all();
+        return Gol::all()->map(function ($gol) {
+            return $this->formatGol($gol);
+        });
     }
 
     /**
@@ -26,7 +51,7 @@ class GolsController extends Controller
     public function store(Request $request)
     {
         $attrs = $request->only(['tempo_do_jogo', 'id_jogador_em_campo', 'detalhes']);
-        return Gol::create($attrs);
+        return $this->formatGol(Gol::create($attrs));
     }
 
     /**
@@ -37,7 +62,7 @@ class GolsController extends Controller
      */
     public function show($id)
     {
-        return Gol::findOrFail($id);
+        return $this->formatGol(Gol::findOrFail($id));
     }
 
     /**
@@ -52,7 +77,7 @@ class GolsController extends Controller
         $gol = Gol::findOrFail($id);
         $attrs = $request->only(['tempo_do_jogo', 'id_jogador_em_campo', 'detalhes']);
         $gol->update($attrs);
-        return $gol;
+        return $this->formatGol($gol);
     }
 
     /**
