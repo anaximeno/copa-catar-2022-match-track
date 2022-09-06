@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_frontend/views/confrontos/confrontos.dart';
 import 'equipes/equipes.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   static const List<Widget> _sections = <Widget>[
-    Text('Index 0: Confrontos'),
+    ViewConfrontos(),
     ViewEquipes(),
     Text('Index 2: Sobre'),
   ];
