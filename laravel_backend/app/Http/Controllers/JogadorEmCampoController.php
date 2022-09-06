@@ -3,10 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\JogadorEmCampo;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class JogadorEmCampoController extends Controller
 {
+    function formatJogadorEmCampo($jogadorEmCampo)
+    {
+        $jogador = $jogadorEmCampo->jogador;
+        $confronto = $jogadorEmCampo->confronto;
+
+        $equipaDoJogador = ($jogador->equipa == $confronto->equipaCasa)
+            ? 'casa'
+            : 'visita';
+
+        return new Collection([
+                'id' => $jogador->id,
+                'nome' => $jogador->nome,
+                'sobrenome' => $jogador->sobrenome,
+                'apelido' => $jogador->apelido,
+                'idade' => $jogador->idade,
+                'posicao' => $jogador->posicao,
+                'numero_camisa' => $jogador->numero_camisa,
+                'equipaDoJogador' => $equipaDoJogador,
+                'cartoes' => $jogadorEmCampo->cartoes,
+                'gols' => $jogadorEmCampo->gols,
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,10 +39,9 @@ class JogadorEmCampoController extends Controller
     public function index($id_confronto)
     {
         $jogadores = JogadorEmCampo::all()->where('id_confronto', $id_confronto);
-        $jogadores = $jogadores->map(function($jogadorEmCampo) {
-            return $jogadorEmCampo->jogador;
+        return $jogadores->map(function ($jogadorEmCampo) {
+            return $this->formatJogadorEmCampo($jogadorEmCampo);
         });
-        return $jogadores;
     }
 
     /**
@@ -31,7 +54,7 @@ class JogadorEmCampoController extends Controller
     {
         $attrs = $request->only(['id_jogador', 'tempo_de_entrada', 'tempo_de_saida']);
         $attrs['id_confronto'] = $id_confronto;
-        return JogadorEmCampo::create($attrs);
+        return $this->formatJogadorEmCampo(JogadorEmCampo::create($attrs));
     }
 
     /**
@@ -42,7 +65,7 @@ class JogadorEmCampoController extends Controller
      */
     public function show($id_confronto, $id)
     {
-        return JogadorEmCampo::findOrFail($id)->jogador;
+        return $this->formatJogadorEmCampo(JogadorEmCampo::findOrFail($id));
     }
 
     /**
@@ -58,7 +81,7 @@ class JogadorEmCampoController extends Controller
         $attrs = $request->only(['id_jogador', 'tempo_de_entrada', 'tempo_de_saida']);
         $attrs['id_confronto'] = $id_confronto;
         $jogadorEmCampo->update($attrs);
-        return $jogadorEmCampo;
+        return $this->formatJogadorEmCampo($jogadorEmCampo);
     }
 
     /**
