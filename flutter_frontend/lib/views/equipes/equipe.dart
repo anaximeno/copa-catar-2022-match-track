@@ -47,6 +47,98 @@ class ViewEquipe extends StatelessWidget {
       appBar: AppBar(
         title: Text(equipe.nome),
       ),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Image.asset(
+                'images/clube_de_futebol.png',
+                scale: 1.5,
+              ),
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 100,
+                        height: 100,
+                        color: const Color.fromARGB(255, 255, 191, 0),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Gols',
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                            Text(
+                              '#',
+                              style: Theme.of(context).textTheme.headline6,
+                            ) // TODO: get gols from the API
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 100,
+                        height: 100,
+                        color: Colors.blue,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Cartões',
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                            Text(
+                              '#',
+                              style: Theme.of(context).textTheme.headline6,
+                            ) // TODO: get cartoes from the API
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        width: 100,
+                        height: 100,
+                        color: Colors.red,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Jogadores',
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                            Text(
+                              '#',
+                              style: Theme.of(context).textTheme.headline6,
+                            ) // TODO: get jogadores from the API
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 100,
+                        height: 100,
+                        color: Colors.green,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Confrontos',
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                            Text(
+                              '#',
+                              style: Theme.of(context).textTheme.headline6,
+                            ) // TODO: get confrontos from the API
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
