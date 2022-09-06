@@ -32,4 +32,28 @@ class Jogador extends Model
     {
         return $this->hasMany(\App\Models\JogadorEmCampo::class, 'id_jogador');
     }
+
+    function gols()
+    {
+        return $this->hasManyThrough(
+            \App\Models\Gol::class,
+            \App\Models\JogadorEmCampo::class,
+            'id_jogador',
+            'id_jogador_em_campo',
+            'id',
+            'id'
+        );
+    }
+
+    function cartoes()
+    {
+        return $this->hasManyThrough(
+            \App\Models\Cartao::class,
+            \App\Models\JogadorEmCampo::class,
+            'id_jogador',
+            'id_jogador_em_campo',
+            'id',
+            'id'
+        );
+    }
 }
