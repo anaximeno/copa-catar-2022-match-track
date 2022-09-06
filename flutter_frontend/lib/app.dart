@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
       title: 'Copa Catar 2022 - Match Tracker',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.indigo,
       ),
       home: const HomePage(),
     );

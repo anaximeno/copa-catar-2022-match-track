@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.question_mark), label: 'Sobre'),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.purple[800],
+        selectedItemColor: Colors.indigo,
         onTap: (int index) {
           setState(() {
             _selectedIndex = index;
