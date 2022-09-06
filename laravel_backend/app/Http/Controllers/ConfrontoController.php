@@ -8,6 +8,60 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ConfrontoController extends Controller
 {
+    function formatEquipaEmConfronto($equipa, $confronto)
+    {
+        $jogadores = $confronto->jogadoresEmCampo()->get()
+            ->map(function ($jogadorEmCampo) {
+                return $jogadorEmCampo->jogador;
+            })
+            ->filter(function ($jogador) use (&$equipa) {
+                return $jogador->id_equipa == $equipa->id;
+            });
+
+        $gols = $confronto->gols->filter(function ($gol) use (&$equipa) {
+            return $gol->jogador->id_equipa == $equipa->id;
+        });
+
+        $cartoes = $confronto->cartoes->filter(function ($cartao) use (&$equipa) {
+            return $cartao->jogador->id_equipa == $equipa->id;
+        });
+
+        $substituicoes = $confronto->substituicoes->where('id_equipa', $equipa->id);
+
+        return new Collection([
+            'id' => $equipa->id,
+            'nome' => $equipa->nome,
+            'simbolo' => $equipa->simbolo,
+            'local_pertencente' => $equipa->local_pertencente,
+            'jogadores_em_campo' => $jogadores,
+            'gols' => $gols,
+            'substituicoes' => $substituicoes,
+            'cartoes' => $cartoes,
+        ]);
+    }
+
+    function formatConfronto($confronto)
+    {
+        return new Collection([
+            'confronto' => [
+                'id' => $confronto->id,
+                'local' => $confronto->local,
+                'dia' => $confronto->dia,
+                'inicio' => $confronto->inicio,
+                'fim' => $confronto->fim,
+                'rodada' => $confronto->rodada,
+                'estadio' => $confronto->estadio,
+                'local' => $confronto->local,
+                'arbitro' => $confronto->arbitro,
+                'terminou' => $confronto->terminou,
+                'equipes' => [
+                    'casa' => $this->formatEquipaEmConfronto($confronto->equipaCasa, $confronto),
+                    'visita' => $this->formatEquipaEmConfronto($confronto->equipaVisita, $confronto),
+                ]
+            ]
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +69,9 @@ class ConfrontoController extends Controller
      */
     public function index()
     {
-        return Confronto::all();
+        return Confronto::all()->map(function ($confronto) {
+            return $this->formatConfronto($confronto);
+        });
     }
 
     /**
@@ -38,7 +94,8 @@ class ConfrontoController extends Controller
             'terminou',
             'rodada',
         ]);
-        return Confronto::create($attrs);
+
+        return $this->formatConfronto(Confronto::create($attrs));
     }
 
     /**
@@ -49,7 +106,7 @@ class ConfrontoController extends Controller
      */
     public function show($id)
     {
-        return Confronto::findOrFail($id);
+        return $this->formatConfronto(Confronto::findOrFail($id));
     }
 
     /**
@@ -75,7 +132,7 @@ class ConfrontoController extends Controller
             'rodada',
         ]);
         $confronto->update($attrs);
-        return $confronto;
+        return $this->formatConfronto($confronto);
     }
 
     /**
@@ -88,64 +145,5 @@ class ConfrontoController extends Controller
     {
         Confronto::findOrFail($id)->delete();
         return response('', 204);
-    }
-
-    /** Mostra o registro dos confrontos */
-    public function registros($id_confronto)
-    {
-        $confronto = Confronto::findOrFail($id_confronto);
-
-        $formatEquipes = function($equipa) use(&$confronto)
-        {
-            $jogadores = $confronto
-                ->jogadoresEmCampo()
-                ->get()
-                ->map(function($jogadorEmCampo) {
-                    return $jogadorEmCampo->jogador;
-                })
-                ->filter(function($jogador) use(&$equipa) {
-                    return $jogador->id_equipa == $equipa->id;
-                });
-
-            $gols = $confronto->gols->filter(function($gol) use(&$equipa) {
-                return $gol->jogador->id_equipa == $equipa->id;
-            });
-
-            $cartoes = $confronto->cartoes->filter(function($cartao) use(&$equipa) {
-                return $cartao->jogador->id_equipa == $equipa->id;
-            });
-
-            $substituicoes = $confronto->substituicoes->where('id_equipa', $equipa->id);
-
-            return new Collection([
-                'id' => $equipa->id,
-                'nome' => $equipa->nome,
-                'simbolo' => $equipa->simbolo,
-                'local_pertencente' => $equipa->local_pertencente,
-                'jogadores_em_campo' => $jogadores,
-                'gols' => $gols,
-                'substituicoes' => $substituicoes,
-                'cartoes' => $cartoes,
-            ]);
-        };
-
-        return new Collection([
-            'confronto' => [
-                'id' => $confronto->id,
-                'local' => $confronto->local,
-                'dia' => $confronto->dia,
-                'inicio' => $confronto->inicio,
-                'fim' => $confronto->fim,
-                'rodada' => $confronto->rodada,
-                'estadio' => $confronto->estadio,
-                'local' => $confronto->local,
-                'arbitro' => $confronto->arbitro,
-                'terminou' => $confronto->terminou,
-                'equipes' => [
-                    'casa' => $formatEquipes($confronto->equipaCasa),
-                    'visita' => $formatEquipes($confronto->equipaVisita)
-                ]
-            ]
-        ]);
     }
 }

@@ -43,7 +43,4 @@ Route::prefix('v1')->group(function() {
     Route::get('arbitros/{id_arbitro}/confrontos/{id}',
         [\App\Http\Controllers\ArbitroController::class, 'confronto']
     );
-    Route::get('confrontos/{id_confronto}/registros',
-        [\App\Http\Controllers\ConfrontoController::class, 'registros']
-    );
 });
