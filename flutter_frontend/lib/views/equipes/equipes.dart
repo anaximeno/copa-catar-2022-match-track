@@ -15,22 +15,6 @@ Future<List<Equipe>> fetchEquipes() async {
   return compute(parseEquipes, response.body);
 }
 
-class EquipesList extends StatelessWidget {
-  final List<Equipe> equipes;
-
-  const EquipesList({super.key, required this.equipes});
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate:
-          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      itemCount: equipes.length,
-      itemBuilder: (context, index) => Text(equipes[index].nome),
-    );
-  }
-}
-
 class ViewEquipes extends StatefulWidget {
   const ViewEquipes({super.key});
 
@@ -39,21 +23,48 @@ class ViewEquipes extends StatefulWidget {
 }
 
 class _ViewEquipesState extends State<ViewEquipes> {
-  late Future<List<Equipe>> futureEquipes;
+  late Future<List<Equipe>> _equipes;
 
   @override
   void initState() {
     super.initState();
-    futureEquipes = fetchEquipes();
+    _equipes = fetchEquipes();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Equipe>>(
-      future: futureEquipes,
+      future: _equipes,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return EquipesList(equipes: snapshot.data!);
+          final equipes = snapshot.data!;
+
+          return ListView.builder(
+            itemCount: equipes.length,
+            itemBuilder: ((context, index) {
+              return Row(
+                children: [
+                  Image.asset('images/clube_de_futebol.png', scale: 10,),
+                  Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          const Text('Nome: '),
+                          Text(equipes[index].nome),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Text('Local pertencente: '),
+                          Text(equipes[index].localPertencente),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              );
+            }),
+          );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
