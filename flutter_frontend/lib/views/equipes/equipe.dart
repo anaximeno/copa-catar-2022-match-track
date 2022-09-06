@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -29,5 +30,23 @@ Future<Equipe> fetchEquipe({required final int id}) async {
     return Equipe.fromJSON(jsonDecode(response.body));
   } else {
     throw Exception('Failed to load album');
+  }
+}
+
+class ViewEquipe extends StatelessWidget {
+  final Equipe equipe;
+
+  const ViewEquipe({
+    super.key,
+    required this.equipe,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(equipe.nome),
+      ),
+    );
   }
 }

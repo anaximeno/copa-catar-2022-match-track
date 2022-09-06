@@ -42,31 +42,26 @@ class _ViewEquipesState extends State<ViewEquipes> {
           return ListView.builder(
             itemCount: equipes.length,
             itemBuilder: ((context, index) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    'images/clube_de_futebol.png',
-                    scale: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          const Text('Nome: '),
-                          Text(equipes[index].nome),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          const Text('Local pertencente: '),
-                          Text(equipes[index].localPertencente),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
+              return ListTile(
+                leading: Image.asset(
+                  'images/clube_de_futebol.png',
+                  scale: 10,
+                ),
+                title: Text(equipes[index].nome),
+                subtitle: Row(
+                  children: <Widget>[
+                    const Text('Local Pertencente: '),
+                    Text(equipes[index].localPertencente),
+                  ],
+                ),
+                onTap: (() {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          ViewEquipe(equipe: equipes[index]),
+                    ),
+                  );
+                }),
               );
             }),
           );
