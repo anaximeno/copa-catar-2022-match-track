@@ -43,21 +43,19 @@ class ConfrontoController extends Controller
     function formatConfronto($confronto)
     {
         return new Collection([
-            'confronto' => [
-                'id' => $confronto->id,
-                'local' => $confronto->local,
-                'dia' => $confronto->dia,
-                'inicio' => $confronto->inicio,
-                'fim' => $confronto->fim,
-                'rodada' => $confronto->rodada,
-                'estadio' => $confronto->estadio,
-                'local' => $confronto->local,
-                'arbitro' => $confronto->arbitro,
-                'terminou' => $confronto->terminou,
-                'equipes' => [
-                    'casa' => $this->formatEquipaEmConfronto($confronto->equipaCasa, $confronto),
-                    'visita' => $this->formatEquipaEmConfronto($confronto->equipaVisita, $confronto),
-                ]
+            'id' => $confronto->id,
+            'local' => $confronto->local,
+            'dia' => $confronto->dia,
+            'inicio' => $confronto->inicio,
+            'fim' => $confronto->fim,
+            'rodada' => $confronto->rodada,
+            'estadio' => $confronto->estadio,
+            'local' => $confronto->local,
+            'arbitro' => $confronto->arbitro,
+            'terminou' => $confronto->terminou,
+            'equipes' => [
+                'casa' => $this->formatEquipaEmConfronto($confronto->equipaCasa, $confronto),
+                'visita' => $this->formatEquipaEmConfronto($confronto->equipaVisita, $confronto),
             ]
         ]);
     }
