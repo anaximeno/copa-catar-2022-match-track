@@ -14,9 +14,10 @@ class Equipe {
 
   factory Equipe.fromJSON(Map<String, dynamic> json) {
     return Equipe(
-        id: json['id'],
-        nome: json['nome'],
-        localPertencente: json['local_pertencente']);
+      id: json['id'],
+      nome: json['nome'],
+      localPertencente: json['local_pertencente'],
+    );
   }
 }
 
