@@ -4,9 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Substituicao;
+use Illuminate\Database\Eloquent\Collection;
 
 class SubstituicaoController extends Controller
 {
+    function formatSubstituicao($substituicao)
+    {
+        $confronto = $substituicao->confronto;
+
+        return new Collection([
+            'id' => $substituicao->id,
+            'saiu' => $substituicao->jogadorQueSaiu,
+            'entrou' => $substituicao->jogadorQueEntrou,
+            'equipa' => $substituicao->equipa,
+            'confronto' => [
+                'id' => $confronto->id,
+                'local' => $confronto->local,
+                'estadio' => $confronto->estadio,
+                'dia' => $confronto->dia,
+                'equipes' => [
+                    'casa' => $confronto->equipaCasa,
+                    'visita' => $confronto->equipaVisita,
+                ],
+            ],
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +37,9 @@ class SubstituicaoController extends Controller
      */
     public function index()
     {
-        return Substituicao::all();
+        return Substituicao::all()->map(function($substituicao) {
+            return $this->formatSubstituicao($substituicao);
+        });
     }
 
     /**
@@ -32,7 +57,7 @@ class SubstituicaoController extends Controller
             'id_confronto'
         ]);
         //TODO: update jogadores em campo
-        return Substituicao::create($attrs);
+        return $this->formatSubstituicao(Substituicao::create($attrs));
     }
 
     /**
@@ -43,7 +68,7 @@ class SubstituicaoController extends Controller
      */
     public function show($id)
     {
-        return Substituicao::findOrFail($id);
+        return $this->formatSubstituicao(Substituicao::findOrFail($id));
     }
 
     /**
@@ -64,7 +89,7 @@ class SubstituicaoController extends Controller
         ]);
         $substituicao->update($attrs);
         //TODO: update jogadores em campo
-        return $substituicao;
+        return $this->formatSubstituicao($substituicao);
     }
 
     /**
