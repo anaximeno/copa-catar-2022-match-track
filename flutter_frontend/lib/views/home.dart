@@ -17,28 +17,29 @@ class _HomePageState extends State<HomePage> {
     Text('Index 2: Sobre'),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: _sections.elementAt(_selectedIndex)),
+      body: Center(
+        child: _sections.elementAt(_selectedIndex),
+      ),
       bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.sports_soccer), label: 'Confrontos'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.sports_kabaddi_sharp), label: 'Equipes'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.question_mark), label: 'Sobre'),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.purple[800],
-          onTap: _onItemTapped),
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(Icons.sports_soccer), label: 'Confrontos'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.sports_kabaddi_sharp), label: 'Equipes'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.question_mark), label: 'Sobre'),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.purple[800],
+        onTap: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+      ),
     );
   }
 }
