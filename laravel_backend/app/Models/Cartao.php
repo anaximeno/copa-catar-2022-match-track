@@ -31,12 +31,6 @@ class Cartao extends Model
         );
     }
 
-    /** A equipa que marcou o golo */
-    function equipa()
-    {
-        return $this->jogador()->equipa;
-    }
-
     /** O confronto decorrente no momento */
     function confronto()
     {

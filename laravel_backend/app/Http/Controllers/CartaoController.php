@@ -4,9 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cartao;
+use Illuminate\Database\Eloquent\Collection;
 
 class CartaoController extends Controller
 {
+    function formatCartao($cartao)
+    {
+        $confronto = $cartao->confronto;
+
+        return new Collection([
+            'id' => $cartao->id,
+            'tempo_do_jogo' => $cartao->tempo_do_jogo,
+            'confronto' => [
+                'id' => $confronto->id,
+                'local' => $confronto->local,
+                'estadio' => $confronto->estadio,
+                'dia' => $confronto->dia,
+                'equipes' => [
+                    'casa' => $confronto->equipaCasa,
+                    'visita' => $confronto->equipaVisita,
+                ],
+            ],
+            'equipa' => $cartao->jogador->equipa,
+            'jogador' => $cartao->jogador,
+            'detalhes' => $cartao->detalhes,
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +38,9 @@ class CartaoController extends Controller
      */
     public function index()
     {
-        return Cartao::all();
+        return Cartao::all()->map(function($cartao) {
+            return $this->formatCartao($cartao);
+        });
     }
 
     /**
@@ -28,7 +54,7 @@ class CartaoController extends Controller
         $attrs = $request->only(
             ['tempo_do_jogo', 'id_jogador_em_campo', 'detalhes', 'cor']
         );
-        return Cartao::create($attrs);
+        return $this->formatCartao(Cartao::create($attrs));
     }
 
     /**
@@ -39,7 +65,7 @@ class CartaoController extends Controller
      */
     public function show($id)
     {
-        return Cartao::findOrFail($id);
+        return $this->formatCartao(Cartao::findOrFail($id));
     }
 
     /**
@@ -56,7 +82,7 @@ class CartaoController extends Controller
             ['tempo_do_jogo', 'id_jogador_em_campo', 'detalhes', 'cor']
         );
         $cartao->update($attrs);
-        return $cartao;
+        return $this->formatCartao($cartao);
     }
 
     /**
