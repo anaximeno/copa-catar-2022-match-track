@@ -43,9 +43,14 @@ class _ViewEquipesState extends State<ViewEquipes> {
             itemCount: equipes.length,
             itemBuilder: ((context, index) {
               return Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Image.asset('images/clube_de_futebol.png', scale: 10,),
+                  Image.asset(
+                    'images/clube_de_futebol.png',
+                    scale: 10,
+                  ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Row(
                         children: <Widget>[
