@@ -27,6 +27,7 @@ class GolsController extends Controller
             ],
             'equipa' => $gol->jogador->equipa,
             'jogador' => $gol->jogador,
+            'detalhes' => $gol->detalhes,
         ]);
     }
 
