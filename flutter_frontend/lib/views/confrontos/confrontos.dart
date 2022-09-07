@@ -17,21 +17,15 @@ Future<List<Confronto>> fetchConfrontos() async {
 }
 
 class ViewConfrontos extends StatefulWidget {
-  const ViewConfrontos({super.key});
+  final Future<List<Confronto>> confrontos;
+
+  const ViewConfrontos({super.key, required this.confrontos});
 
   @override
   State<ViewConfrontos> createState() => _ViewConfrontosState();
 }
 
 class _ViewConfrontosState extends State<ViewConfrontos> {
-  late Future<List<Confronto>> _confrontos;
-
-  @override
-  void initState() {
-    super.initState();
-    _confrontos = fetchConfrontos();
-  }
-
   _getOnTapCallback(BuildContext context, Confronto confronto) {
     return () {
       Navigator.of(context).push(
@@ -42,7 +36,7 @@ class _ViewConfrontosState extends State<ViewConfrontos> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Confronto>>(
-      future: _confrontos,
+      future: widget.confrontos,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final confrontos = snapshot.data!;

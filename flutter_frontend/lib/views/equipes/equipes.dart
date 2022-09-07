@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_frontend/views/confrontos/confronto.dart';
 import 'package:http/http.dart' as http;
 import '../../misc/assets.dart' as assets;
 import 'dart:convert';
@@ -17,25 +18,20 @@ Future<List<Equipe>> fetchEquipes() async {
 }
 
 class ViewEquipes extends StatefulWidget {
-  const ViewEquipes({super.key});
+  final Future<List<Equipe>> equipes;
+
+  const ViewEquipes({super.key, required this.equipes});
 
   @override
   State<ViewEquipes> createState() => _ViewEquipesState();
 }
 
 class _ViewEquipesState extends State<ViewEquipes> {
-  late Future<List<Equipe>> _equipes;
-
-  @override
-  void initState() {
-    super.initState();
-    _equipes = fetchEquipes();
-  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Equipe>>(
-      future: _equipes,
+      future: widget.equipes,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final equipes = snapshot.data!;
