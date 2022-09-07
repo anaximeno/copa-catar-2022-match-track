@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import '../../misc/assets.dart' as assets;
 
 class Jogador {
@@ -11,6 +12,8 @@ class Jogador {
   final String posicao;
   final int numeroCamisa;
   String? nomeDaEquipa;
+  int? nGols;
+  int? nCartoes;
 
   Jogador({
     required this.id,
@@ -22,6 +25,8 @@ class Jogador {
     required this.numeroCamisa,
     this.apelido,
     this.nomeDaEquipa,
+    this.nGols,
+    this.nCartoes,
   });
 
   factory Jogador.fromJSON(Map<String, dynamic> json) {
@@ -34,6 +39,8 @@ class Jogador {
       posicao: json['posicao'],
       numeroCamisa: json['numero_camisa'],
       apelido: json['apelido'],
+      nGols: json['gols'].length,
+      nCartoes: json['cartoes'].length,
     );
   }
 
@@ -78,109 +85,83 @@ class _ViewJogadorState extends State<ViewJogador> {
     );
   }
 
-  Widget topDash(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
-        child: Container(
-          margin: const EdgeInsets.only(top: 20),
-          child: Column(
-            children: [
-              SizedBox(
-                width: widget.generalWidth,
-                child: Card(
-                  child: ListTile(
-                    leading: Text(
-                      '${widget.jogador.numeroCamisa}',
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                    title: Text(
-                      widget.jogador.nomeCompletoComApelido,
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                    subtitle: Text(
-                      widget.jogador.posicao,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                ),
-              ),
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: widget.generalWidth,
-                  maxHeight: 1000,
-                ),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  children: [
-                    Card(
-                      child: SizedBox(
-                        child: Image.asset(assets.imgJogadorDeFutebol),
-                      ),
-                    ),
-                    ListView(
-                      children: [
-                        ListTile(
-                          title: Text(
-                            'Informações',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ),
-                        topDashGridElement(
-                          context: context,
-                          leading: 'Nome: ',
-                          title: widget.jogador.nome,
-                        ),
-                        topDashGridElement(
-                          context: context,
-                          leading: 'Sobrenome: ',
-                          title: widget.jogador.sobrenome,
-                        ),
-                        topDashGridElement(
-                          context: context,
-                          leading: 'Apelido: ',
-                          title: widget.jogador.apelido ?? "Não Tem",
-                        ),
-                        topDashGridElement(
-                          context: context,
-                          leading: 'Equipa: ',
-                          title: widget.jogador.nomeDaEquipa ?? "Sem Equipa",
-                        ),
-                        topDashGridElement(
-                          context: context,
-                          leading: 'Posição: ',
-                          title: widget.jogador.posicao,
-                        ),
-                        topDashGridElement(
-                          context: context,
-                          leading: 'Número: ',
-                          title: '${widget.jogador.numeroCamisa}',
-                        ),
-                        topDashGridElement(
-                          context: context,
-                          leading: 'Gols: ',
-                          title: '#gols',
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Jogador'),
       ),
-      body: SingleChildScrollView(
-        child: topDash(context),
+      body: Center(
+        child: ListView(
+          children: [
+            Card(
+              child: ListTile(
+                leading: Text(
+                  '${widget.jogador.numeroCamisa}',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                title: Text(
+                  widget.jogador.nomeCompletoComApelido,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                subtitle: Text(
+                  widget.jogador.posicao,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ),
+            ),
+            Card(
+              child: Image.asset(assets.imgJogadorDeFutebol, scale: 1.2),
+            ),
+            ListTile(
+              title: Text(
+                'Informações',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            ),
+            topDashGridElement(
+              context: context,
+              leading: 'Número: ',
+              title: '${widget.jogador.numeroCamisa}',
+            ),
+            topDashGridElement(
+              context: context,
+              leading: 'Nome: ',
+              title: widget.jogador.nome,
+            ),
+            topDashGridElement(
+              context: context,
+              leading: 'Sobrenome: ',
+              title: widget.jogador.sobrenome,
+            ),
+            topDashGridElement(
+              context: context,
+              leading: 'Apelido: ',
+              title: widget.jogador.apelido ?? "Não Tem",
+            ),
+            topDashGridElement(
+              context: context,
+              leading: 'Equipa: ',
+              title: widget.jogador.nomeDaEquipa ?? "Sem Equipa",
+            ),
+            topDashGridElement(
+              context: context,
+              leading: 'Posição: ',
+              title: widget.jogador.posicao,
+            ),
+            topDashGridElement(
+              context: context,
+              leading: 'Gols: ',
+              title: '${widget.jogador.nGols ?? 0}',
+            ),
+            topDashGridElement(
+              context: context,
+              leading: 'Cartões: ',
+              title: '${widget.jogador.nCartoes ?? 0}',
+            ),
+          ],
+        ),
       ),
     );
   }
