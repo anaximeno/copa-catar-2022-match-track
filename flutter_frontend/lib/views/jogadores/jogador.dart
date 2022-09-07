@@ -83,7 +83,7 @@ class _ViewJogadorState extends State<ViewJogador> {
     return SingleChildScrollView(
       child: Center(
         child: Container(
-          margin: const EdgeInsets.only(top: 40),
+          margin: const EdgeInsets.only(top: 20),
           child: ConstrainedBox(
             constraints: BoxConstraints(
               maxWidth: widget.generalWidth,
@@ -92,9 +92,20 @@ class _ViewJogadorState extends State<ViewJogador> {
             child: GridView.count(
               crossAxisCount: 2,
               children: [
-                Image.asset(assets.imgJogadorDeFutebol),
+                Card(
+                  child: SizedBox(
+                    child: Image.asset(assets.imgJogadorDeFutebol),
+                  ),
+                ),
                 ListView(
                   children: [
+                    ListTile(
+                      title: Text(
+                        'Informações',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ),
                     topDashGridElement(
                       context: context,
                       leading: 'Nome: ',
