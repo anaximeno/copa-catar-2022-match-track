@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EquipeRequest;
 use Illuminate\Http\Request;
 use App\Models\Equipa;
 use Illuminate\Database\Eloquent\Collection;
@@ -65,13 +66,12 @@ class EquipesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\EquipeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EquipeRequest $request)
     {
-        $attrs = $request->only(['nome', 'simbolo', 'local_pertencente']);
-        return $this->formatEquipa(Equipa::create($attrs));
+        return $this->formatEquipa(Equipa::create($request->validated()));
     }
 
     /**
@@ -88,15 +88,14 @@ class EquipesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\EquipeRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EquipeRequest $request, $id)
     {
         $equipa = Equipa::findOrFail($id);
-        $attrs = $request->only(['nome', 'simbolo', 'local_pertencente']);
-        $equipa->update($attrs);
+        $equipa->update($request->validated());
         return $this->formatEquipa($equipa);
     }
 
