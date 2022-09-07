@@ -40,8 +40,23 @@ class _ViewEquipesState extends State<ViewEquipes> {
           final equipes = snapshot.data!;
 
           return ListView.builder(
-            itemCount: equipes.length,
+            itemCount: equipes.length + 1, // NOTE: ADD TITLE
             itemBuilder: ((context, index) {
+              if (index == 0) {
+                // NOTE: TITLE
+                return Container(
+                  margin: const EdgeInsets.all(40),
+                  child: Center(
+                    child: Text(
+                      'Equipes',
+                      style: Theme.of(context).textTheme.headline2,
+                    ),
+                  ),
+                );
+              } else {
+                index -= 1;
+              }
+
               return Card(
                 elevation: 2,
                 child: ListTile(

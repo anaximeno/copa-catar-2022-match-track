@@ -91,6 +91,16 @@ class ViewEquipe extends StatelessWidget {
                 SizedBox(
                   width: 400,
                   child: Card(
+                    child: Text(
+                      equipe.nome,
+                      style: Theme.of(context).textTheme.headline4,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 400,
+                  child: Card(
                     child: Image.asset(
                       'images/clube_de_futebol.png',
                       scale: 1.2,
@@ -103,10 +113,14 @@ class ViewEquipe extends StatelessWidget {
                   child: GridView.count(
                     crossAxisCount: 2,
                     children: [
-                      gridDashSection(context, equipe.numberOfGols??0, 'Gols'),
-                      gridDashSection(context, equipe.numberOfSubstituicoes??0, 'Substituições'),
-                      gridDashSection(context, equipe.numberOfJogadores??0, 'Jogadores'),
-                      gridDashSection(context, equipe.numberOfCartoes??0, 'Catões'),
+                      gridDashSection(
+                          context, equipe.numberOfGols ?? 0, 'Gols'),
+                      gridDashSection(context,
+                          equipe.numberOfSubstituicoes ?? 0, 'Substituições'),
+                      gridDashSection(
+                          context, equipe.numberOfJogadores ?? 0, 'Jogadores'),
+                      gridDashSection(
+                          context, equipe.numberOfCartoes ?? 0, 'Catões'),
                     ],
                   ),
                 ),
