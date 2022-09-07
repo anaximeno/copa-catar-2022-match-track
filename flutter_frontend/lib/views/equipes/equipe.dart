@@ -6,11 +6,19 @@ class Equipe {
   final int id;
   final String nome;
   final String localPertencente;
+  final int? numberOfGols;
+  final int? numberOfCartoes;
+  final int? numberOfSubstituicoes;
+  final int? numberOfJogadores;
 
   const Equipe({
     required this.id,
     required this.nome,
     required this.localPertencente,
+    this.numberOfGols,
+    this.numberOfCartoes,
+    this.numberOfSubstituicoes,
+    this.numberOfJogadores,
   });
 
   factory Equipe.fromJSON(Map<String, dynamic> json) {
@@ -18,6 +26,10 @@ class Equipe {
       id: json['id'],
       nome: 'F.C. ${json['nome']}',
       localPertencente: json['local_pertencente'],
+      numberOfGols: json['gols']?.length,
+      numberOfCartoes: json['cartoes']?.length,
+      numberOfSubstituicoes: json['substituicoes']?.length,
+      numberOfJogadores: json['jogadores']?.length,
     );
   }
 }
@@ -44,101 +56,66 @@ class ViewEquipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(equipe.nome),
-      ),
-      body: Column(
-        children: [
-          Row(
-            children: [
-              Image.asset(
-                'images/clube_de_futebol.png',
-                scale: 1.5,
-              ),
-              Column(
-                children: [
-                  Row(
+        appBar: AppBar(
+          title: Text(equipe.nome),
+        ),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 400,
+                  child: Card(
+                    child: Image.asset(
+                      'images/clube_de_futebol.png',
+                      scale: 1.2,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 400,
+                  height: 400,
+                  child: GridView.count(
+                    crossAxisCount: 2,
                     children: [
-                      Container(
-                        width: 100,
-                        height: 100,
-                        color: const Color.fromARGB(255, 255, 191, 0),
-                        child: Column(
-                          children: [
-                            Text(
-                              'Gols',
-                              style: Theme.of(context).textTheme.headline5,
-                            ),
-                            Text(
-                              '#',
-                              style: Theme.of(context).textTheme.headline6,
-                            ) // TODO: get gols from the API
-                          ],
+                      Card(
+                        child: Center(
+                          child: Text(
+                            'Gols: ${equipe.numberOfGols ?? 0}',
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
                         ),
                       ),
-                      Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.blue,
-                        child: Column(
-                          children: [
-                            Text(
-                              'Cartões',
-                              style: Theme.of(context).textTheme.headline5,
-                            ),
-                            Text(
-                              '#',
-                              style: Theme.of(context).textTheme.headline6,
-                            ) // TODO: get cartoes from the API
-                          ],
+                      Card(
+                        child: Center(
+                          child: Text(
+                            'Substituições: ${equipe.numberOfSubstituicoes ?? 0}',
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        ),
+                      ),
+                      Card(
+                        child: Center(
+                          child: Text(
+                            'Jogadores: ${equipe.numberOfJogadores ?? 0}',
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        ),
+                      ),
+                      Card(
+                        child: Center(
+                          child: Text(
+                            'Cartões: ${equipe.numberOfCartoes ?? 0}',
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.red,
-                        child: Column(
-                          children: [
-                            Text(
-                              'Jogadores',
-                              style: Theme.of(context).textTheme.headline5,
-                            ),
-                            Text(
-                              '#',
-                              style: Theme.of(context).textTheme.headline6,
-                            ) // TODO: get jogadores from the API
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.green,
-                        child: Column(
-                          children: [
-                            Text(
-                              'Confrontos',
-                              style: Theme.of(context).textTheme.headline5,
-                            ),
-                            Text(
-                              '#',
-                              style: Theme.of(context).textTheme.headline6,
-                            ) // TODO: get confrontos from the API
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
