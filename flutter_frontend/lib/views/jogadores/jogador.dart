@@ -145,9 +145,7 @@ class _ViewJogadorState extends State<ViewJogador> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.jogador.nomeCompleto,
-        ),
+        title: const Text('Jogador'),
       ),
       body: SingleChildScrollView(
         child: topDash(context),

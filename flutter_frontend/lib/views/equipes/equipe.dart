@@ -85,7 +85,7 @@ class ViewEquipe extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(equipe.nome),
+          title: const Text('Equipe'),
         ),
         body: SingleChildScrollView(
           child: Center(
