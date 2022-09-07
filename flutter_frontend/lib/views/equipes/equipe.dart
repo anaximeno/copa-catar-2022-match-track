@@ -142,20 +142,27 @@ class ViewEquipe extends StatelessWidget {
                         child: ListView.builder(
                           itemBuilder: ((context, index) {
                             final Jogador? jogador = equipe.jogadores?[index];
-                            final String apelido = jogador?.apelido != null
-                                ? ' "${jogador?.apelido}"'
-                                : "";
                             return Card(
                               elevation: 0.5,
                               color: Theme.of(context).backgroundColor,
                               shadowColor: Theme.of(context).shadowColor,
                               child: ListTile(
+                                onTap: () {
+                                  if (jogador != null) {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ViewJogador(jogador: jogador),
+                                      ),
+                                    );
+                                  }
+                                },
                                 leading: Text(
                                   '${jogador?.numeroCamisa}',
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
                                 title: Text(
-                                  '${jogador?.nome}$apelido ${jogador?.sobrenome}',
+                                  '${jogador?.nomeCompletoComApelido}',
                                   style: Theme.of(context).textTheme.bodyLarge,
                                 ),
                                 subtitle: Text('${jogador?.posicao}'),
