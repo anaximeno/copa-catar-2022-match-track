@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import '../../misc/assets.dart' as assets;
 
 class Jogador {
@@ -10,6 +11,7 @@ class Jogador {
   final int idEquipa;
   final String posicao;
   final int numeroCamisa;
+  String? nomeDaEquipa;
 
   Jogador({
     required this.id,
@@ -20,18 +22,20 @@ class Jogador {
     required this.posicao,
     required this.numeroCamisa,
     this.apelido,
+    this.nomeDaEquipa,
   });
 
   factory Jogador.fromJSON(Map<String, dynamic> json) {
     return Jogador(
-        id: json['id'],
-        nome: json['nome'],
-        sobrenome: json['sobrenome'],
-        idade: json['idade'],
-        idEquipa: json['id_equipa'],
-        posicao: json['posicao'],
-        numeroCamisa: json['numero_camisa'],
-        apelido: json['apelido']);
+      id: json['id'],
+      nome: json['nome'],
+      sobrenome: json['sobrenome'],
+      idade: json['idade'],
+      idEquipa: json['id_equipa'],
+      posicao: json['posicao'],
+      numeroCamisa: json['numero_camisa'],
+      apelido: json['apelido'],
+    );
   }
 
   get nomeCompletoComApelido {
@@ -46,10 +50,12 @@ class Jogador {
 
 class ViewJogador extends StatefulWidget {
   final Jogador jogador;
+  final double generalWidth;
 
   const ViewJogador({
     super.key,
     required this.jogador,
+    this.generalWidth = 600,
   });
 
   @override
@@ -57,13 +63,70 @@ class ViewJogador extends StatefulWidget {
 }
 
 class _ViewJogadorState extends State<ViewJogador> {
+  Widget topDashGridElement({
+    required BuildContext context,
+    required String leading,
+    required String title,
+  }) {
+    return Card(
+      child: ListTile(
+        leading: Text(leading),
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ),
+    );
+  }
+
   Widget topDash(BuildContext context) {
-    return Row(
-      children: [
-        Card(
-          child: Image.asset(assets.imgJogadorDeFutebol),
-        )
-      ],
+    return SingleChildScrollView(
+      child: Center(
+        child: Container(
+          margin: const EdgeInsets.only(top: 40),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: widget.generalWidth,
+              maxHeight: 1000,
+            ),
+            child: GridView.count(
+              crossAxisCount: 2,
+              children: [
+                Image.asset(assets.imgJogadorDeFutebol),
+                ListView(
+                  children: [
+                    topDashGridElement(
+                      context: context,
+                      leading: 'Nome: ',
+                      title: widget.jogador.nome,
+                    ),
+                    topDashGridElement(
+                      context: context,
+                      leading: 'Sobrenome: ',
+                      title: widget.jogador.sobrenome,
+                    ),
+                    topDashGridElement(
+                      context: context,
+                      leading: 'Apelido: ',
+                      title: widget.jogador.apelido ?? "Não Tem",
+                    ),
+                    topDashGridElement(
+                      context: context,
+                      leading: 'Equipa: ',
+                      title: widget.jogador.nomeDaEquipa ?? "Sem Equipa",
+                    ),
+                    topDashGridElement(
+                      context: context,
+                      leading: 'Gols: ',
+                      title: '#gols',
+                    ), //TODO: get from class
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -74,6 +137,9 @@ class _ViewJogadorState extends State<ViewJogador> {
         title: Text(
           widget.jogador.nomeCompleto,
         ),
+      ),
+      body: SingleChildScrollView(
+        child: topDash(context),
       ),
     );
   }
