@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../../misc/assets.dart' as assets;
 import 'dart:convert';
 import 'confronto.dart';
 
@@ -32,8 +33,9 @@ class _ViewConfrontosState extends State<ViewConfrontos> {
   }
 
   _getOnTapCallback(BuildContext context, Confronto confronto) {
-    return (){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewConfronto(confronto)));
+    return () {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => ViewConfronto(confronto)));
     };
   }
 
@@ -76,17 +78,21 @@ class _ViewConfrontosState extends State<ViewConfrontos> {
                             Card(
                               clipBehavior: Clip.antiAlias,
                               elevation: 1.1,
-                              child: Image.asset('images/stadium.jpg'),
+                              child: Image.asset(assets.imgEstadioDeFutebol),
                             ),
                             Card(
                               elevation: 1.1,
                               child: Column(
                                 children: [
                                   ListTile(
-                                    onTap: _getOnTapCallback(context, confrontos[index]),
+                                    onTap: _getOnTapCallback(
+                                      context,
+                                      confrontos[index],
+                                    ),
                                     leading: Icon(
                                       Icons.sports_soccer_outlined,
-                                      color: colorsList[index % colorsList.length],
+                                      color:
+                                          colorsList[index % colorsList.length],
                                     ),
                                     title: Text(
                                       '${confrontos[index].equipaCasa.nome} VS ${confrontos[index].equipaVisita.nome}',
