@@ -21,7 +21,7 @@ class JogadorController extends Controller
             'numero_camisa' => $jogador->numero_camisa,
             'equipa' => $jogador->equipa,
             'cartoes' => $jogador->cartoes,
-            'gols' => $jogador->cartoes,
+            'gols' => $jogador->gols,
         ]);
     }
 
