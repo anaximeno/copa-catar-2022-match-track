@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ConfrontoRequest;
 use Illuminate\Http\Request;
 use App\Models\Confronto;
 use Illuminate\Database\Eloquent\Collection;
@@ -75,25 +76,12 @@ class ConfrontoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ConfrontoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ConfrontoRequest $request)
     {
-        $attrs = $request->only([
-            'local',
-            'inicio',
-            'fim',
-            'dia',
-            'estadio',
-            'id_equipa_casa',
-            'id_equipa_visita',
-            'id_arbitro_principal',
-            'terminou',
-            'rodada',
-        ]);
-
-        return $this->formatConfronto(Confronto::create($attrs));
+        return $this->formatConfronto(Confronto::create($request->validated()));
     }
 
     /**
@@ -110,26 +98,14 @@ class ConfrontoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ConfrontoRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ConfrontoRequest $request, $id)
     {
         $confronto = Confronto::findOrFail($id);
-        $attrs = $request->only([
-            'local',
-            'inicio',
-            'fim',
-            'dia',
-            'estadio',
-            'id_equipa_casa',
-            'id_equipa_visita',
-            'id_arbitro_principal',
-            'terminou',
-            'rodada',
-        ]);
-        $confronto->update($attrs);
+        $confronto->update($request->validated());
         return $this->formatConfronto($confronto);
     }
 
