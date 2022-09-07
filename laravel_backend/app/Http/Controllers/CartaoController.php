@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CartaoRequest;
 use Illuminate\Http\Request;
 use App\Models\Cartao;
 use Illuminate\Database\Eloquent\Collection;
@@ -46,15 +47,12 @@ class CartaoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CartaoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CartaoRequest $request)
     {
-        $attrs = $request->only(
-            ['tempo_do_jogo', 'id_jogador_em_campo', 'detalhes', 'cor']
-        );
-        return $this->formatCartao(Cartao::create($attrs));
+        return $this->formatCartao(Cartao::create($request->validated()));
     }
 
     /**
@@ -71,17 +69,14 @@ class CartaoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CartaoRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CartaoRequest $request, $id)
     {
         $cartao = Cartao::findOrFail($id);
-        $attrs = $request->only(
-            ['tempo_do_jogo', 'id_jogador_em_campo', 'detalhes', 'cor']
-        );
-        $cartao->update($attrs);
+        $cartao->update($request->validated());
         return $this->formatCartao($cartao);
     }
 
