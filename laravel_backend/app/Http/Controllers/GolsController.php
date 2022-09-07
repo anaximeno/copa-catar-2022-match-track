@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GolRequest;
 use Illuminate\Http\Request;
 use App\Models\Gol;
 use Illuminate\Database\Eloquent\Collection;
@@ -46,13 +47,12 @@ class GolsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\GolRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GolRequest $request)
     {
-        $attrs = $request->only(['tempo_do_jogo', 'id_jogador_em_campo', 'detalhes']);
-        return $this->formatGol(Gol::create($attrs));
+        return $this->formatGol(Gol::create($request->validated()));
     }
 
     /**
@@ -69,15 +69,14 @@ class GolsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\GolRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(GolRequest $request, $id)
     {
         $gol = Gol::findOrFail($id);
-        $attrs = $request->only(['tempo_do_jogo', 'id_jogador_em_campo', 'detalhes']);
-        $gol->update($attrs);
+        $gol->update($request->validated());
         return $this->formatGol($gol);
     }
 
