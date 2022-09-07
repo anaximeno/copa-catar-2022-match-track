@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_frontend/views/confrontos/confronto.dart';
 import 'package:http/http.dart' as http;
 import '../../misc/assets.dart' as assets;
 import 'dart:convert';

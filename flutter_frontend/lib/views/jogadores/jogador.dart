@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import '../../misc/assets.dart' as assets;
 
 class Jogador {
