@@ -166,6 +166,7 @@ class ViewEquipe extends StatelessWidget {
                               child: ListTile(
                                 onTap: () {
                                   if (jogador != null) {
+                                    jogador.nomeDaEquipa = equipe.nome;
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
