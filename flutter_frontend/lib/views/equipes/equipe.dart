@@ -54,10 +54,14 @@ Future<Equipe> fetchEquipe({required final int id}) async {
 
 class ViewEquipe extends StatelessWidget {
   final Equipe equipe;
+  // XXX: Convert this class to a mutable class
+  // and then use this to resize this section?
+  final double generalWidth;
 
   const ViewEquipe({
     super.key,
     required this.equipe,
+    this.generalWidth = 400,
   });
 
   Widget gridDashSection({
@@ -88,7 +92,7 @@ class ViewEquipe extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  width: 400,
+                  width: generalWidth,
                   child: Card(
                     child: Text(
                       equipe.nome,
@@ -98,7 +102,7 @@ class ViewEquipe extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 400,
+                  width: generalWidth,
                   child: Card(
                     child: Image.asset(
                       assets.imgClubeDeFutebol,
@@ -107,8 +111,8 @@ class ViewEquipe extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 400,
-                  height: 400,
+                  width: generalWidth,
+                  height: generalWidth,
                   child: GridView.count(
                     crossAxisCount: 2,
                     children: [
@@ -148,8 +152,10 @@ class ViewEquipe extends StatelessWidget {
                         ),
                       ),
                       ConstrainedBox(
-                        constraints: const BoxConstraints(
-                            maxWidth: 400, maxHeight: 1000),
+                        constraints: BoxConstraints(
+                          maxWidth: generalWidth,
+                          maxHeight: 1000,
+                        ),
                         child: ListView.builder(
                           itemBuilder: ((context, index) {
                             final Jogador? jogador = equipe.jogadores?[index];
