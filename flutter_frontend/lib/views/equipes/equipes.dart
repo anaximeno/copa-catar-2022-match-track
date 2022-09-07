@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../../misc/assets.dart' as assets;
 import 'dart:convert';
 import 'equipe.dart';
 
@@ -61,7 +62,7 @@ class _ViewEquipesState extends State<ViewEquipes> {
                 elevation: 2,
                 child: ListTile(
                   leading: Image.asset(
-                    'images/clube_de_futebol.png',
+                    assets.imgClubeDeFutebol,
                     scale: 10,
                     colorBlendMode: BlendMode.colorBurn,
                   ),

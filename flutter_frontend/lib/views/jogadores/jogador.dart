@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../misc/assets.dart' as assets;
 
 class Jogador {
   final int id;
@@ -56,6 +57,16 @@ class ViewJogador extends StatefulWidget {
 }
 
 class _ViewJogadorState extends State<ViewJogador> {
+  Widget topDash(BuildContext context) {
+    return Row(
+      children: [
+        Card(
+          child: Image.asset(assets.imgJogadorDeFutebol),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

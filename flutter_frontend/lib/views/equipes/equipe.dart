@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_frontend/views/jogadores/jogador.dart';
 import 'package:http/http.dart' as http;
+import '../../misc/assets.dart' as assets;
 import 'dart:convert';
 
 class Equipe {
@@ -102,7 +103,7 @@ class ViewEquipe extends StatelessWidget {
                   width: 400,
                   child: Card(
                     child: Image.asset(
-                      'images/clube_de_futebol.png',
+                      assets.imgClubeDeFutebol,
                       scale: 1.2,
                     ),
                   ),
