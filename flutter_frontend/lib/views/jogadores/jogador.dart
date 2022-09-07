@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Jogador {
   final int id;
   final String nome;
@@ -21,14 +23,47 @@ class Jogador {
 
   factory Jogador.fromJSON(Map<String, dynamic> json) {
     return Jogador(
-      id: json['id'],
-      nome: json['nome'],
-      sobrenome: json['sobrenome'],
-      idade: json['idade'],
-      idEquipa: json['id_equipa'],
-      posicao: json['posicao'],
-      numeroCamisa: json['numero_camisa'],
-      apelido: json['apelido']
+        id: json['id'],
+        nome: json['nome'],
+        sobrenome: json['sobrenome'],
+        idade: json['idade'],
+        idEquipa: json['id_equipa'],
+        posicao: json['posicao'],
+        numeroCamisa: json['numero_camisa'],
+        apelido: json['apelido']);
+  }
+
+  get nomeCompletoComApelido {
+    final apelidoJogador = apelido != null ? '"$apelido"' : '';
+    return '$nome $apelidoJogador $sobrenome';
+  }
+
+  get nomeCompleto {
+    return '$nome $sobrenome';
+  }
+}
+
+class ViewJogador extends StatefulWidget {
+  final Jogador jogador;
+
+  const ViewJogador({
+    super.key,
+    required this.jogador,
+  });
+
+  @override
+  State<ViewJogador> createState() => _ViewJogadorState();
+}
+
+class _ViewJogadorState extends State<ViewJogador> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          widget.jogador.nomeCompleto,
+        ),
+      ),
     );
   }
 }
