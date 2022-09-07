@@ -149,9 +149,19 @@ class _ViewJogadorState extends State<ViewJogador> {
                         ),
                         topDashGridElement(
                           context: context,
+                          leading: 'Posição: ',
+                          title: widget.jogador.posicao,
+                        ),
+                        topDashGridElement(
+                          context: context,
+                          leading: 'Número: ',
+                          title: '${widget.jogador.numeroCamisa}',
+                        ),
+                        topDashGridElement(
+                          context: context,
                           leading: 'Gols: ',
                           title: '#gols',
-                        ), //TODO: get from class
+                        ),
                       ],
                     )
                   ],
