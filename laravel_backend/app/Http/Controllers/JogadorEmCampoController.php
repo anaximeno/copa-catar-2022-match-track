@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\JogadorEmCampoRequest;
 use App\Models\JogadorEmCampo;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -47,12 +48,12 @@ class JogadorEmCampoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\JogadorEmCampoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id_confronto)
+    public function store(JogadorEmCampoRequest $request, $id_confronto)
     {
-        $attrs = $request->only(['id_jogador', 'tempo_de_entrada', 'tempo_de_saida']);
+        $attrs = $request->validated();
         $attrs['id_confronto'] = $id_confronto;
         return $this->formatJogadorEmCampo(JogadorEmCampo::create($attrs));
     }
@@ -78,7 +79,7 @@ class JogadorEmCampoController extends Controller
     public function update(Request $request, $id_confronto, $id)
     {
         $jogadorEmCampo = JogadorEmCampo::findOrFail($id);
-        $attrs = $request->only(['id_jogador', 'tempo_de_entrada', 'tempo_de_saida']);
+        $attrs = $request->validated();
         $attrs['id_confronto'] = $id_confronto;
         $jogadorEmCampo->update($attrs);
         return $this->formatJogadorEmCampo($jogadorEmCampo);
