@@ -8,6 +8,48 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EquipesController extends Controller
 {
+    function formatEquipa($equipa)
+    {
+        $golsFilter = function ($gol) use (&$equipa) {
+            return $gol->jogador->id_equipa == $equipa->id;
+        };
+
+        $cartoesFilter = function ($cartao) use (&$equipa) {
+            return $cartao->jogador->id_equipa == $equipa->id;
+        };
+
+        $confrontoToGolsReducer = function ($carry, $confronto) {
+            return $carry->merge($confronto->gols);
+        };
+
+        $confrontoToCartoesReducer = function ($carry, $confronto) {
+            return $carry->merge($confronto->cartoes);
+        };
+
+        $gols = array_values($equipa->confrontosEmCasa
+            ->merge($equipa->confrontosEmVisita)
+            ->reduce($confrontoToGolsReducer, new Collection([]))
+            ->filter($golsFilter)
+            ->toArray());
+
+        $cartoes = array_values($equipa->confrontosEmCasa
+            ->merge($equipa->confrontosEmVisita)
+            ->reduce($confrontoToCartoesReducer, new Collection([]))
+            ->filter($cartoesFilter)
+            ->toArray());
+
+        return new Collection([
+            'id' => $equipa->id,
+            'nome' => $equipa->nome,
+            'simbolo' => $equipa->simbolo,
+            'local_pertencente' => $equipa->local_pertencente,
+            'jogadores' => $equipa->jogadores,
+            'gols' => $gols,
+            'substituicoes' => $equipa->substituicoes,
+            'cartoes' => $cartoes,
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +57,9 @@ class EquipesController extends Controller
      */
     public function index()
     {
-        return Equipa::all();
+        return Equipa::all()->map(function ($equipa) {
+            return $this->formatEquipa($equipa);
+        });
     }
 
     /**
@@ -27,7 +71,7 @@ class EquipesController extends Controller
     public function store(Request $request)
     {
         $attrs = $request->only(['nome', 'simbolo', 'local_pertencente']);
-        return Equipa::create($attrs);
+        return $this->formatEquipa(Equipa::create($attrs));
     }
 
     /**
@@ -38,7 +82,7 @@ class EquipesController extends Controller
      */
     public function show($id)
     {
-        return Equipa::findOrFail($id);
+        return $this->formatEquipa(Equipa::findOrFail($id));
     }
 
     /**
@@ -53,7 +97,7 @@ class EquipesController extends Controller
         $equipa = Equipa::findOrFail($id);
         $attrs = $request->only(['nome', 'simbolo', 'local_pertencente']);
         $equipa->update($attrs);
-        return $equipa;
+        return $this->formatEquipa($equipa);
     }
 
     /**
@@ -82,9 +126,9 @@ class EquipesController extends Controller
     public function jogador($id_equipa, $id)
     {
         return Equipa::findOrFail($id_equipa)
-                     ->jogadores()
-                     ->where('id', $id)
-                     ->first();
+            ->jogadores()
+            ->where('id', $id)
+            ->first();
     }
 
     /**
@@ -93,6 +137,7 @@ class EquipesController extends Controller
     public function confrontos($id_equipa)
     {
         $equipa = Equipa::findOrFail($id_equipa);
+
         return new Collection([
             'casa' => $equipa->confrontosEmCasa()->get(),
             'visita' => $equipa->confrontosEmVisita()->get()
