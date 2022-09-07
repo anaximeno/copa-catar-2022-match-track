@@ -84,57 +84,80 @@ class _ViewJogadorState extends State<ViewJogador> {
       child: Center(
         child: Container(
           margin: const EdgeInsets.only(top: 20),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: widget.generalWidth,
-              maxHeight: 1000,
-            ),
-            child: GridView.count(
-              crossAxisCount: 2,
-              children: [
-                Card(
-                  child: SizedBox(
-                    child: Image.asset(assets.imgJogadorDeFutebol),
+          child: Column(
+            children: [
+              SizedBox(
+                width: widget.generalWidth,
+                child: Card(
+                  child: ListTile(
+                    leading: Text(
+                      '${widget.jogador.numeroCamisa}',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    title: Text(
+                      widget.jogador.nomeCompletoComApelido,
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    subtitle: Text(
+                      widget.jogador.posicao,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
                 ),
-                ListView(
+              ),
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: widget.generalWidth,
+                  maxHeight: 1000,
+                ),
+                child: GridView.count(
+                  crossAxisCount: 2,
                   children: [
-                    ListTile(
-                      title: Text(
-                        'Informações',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline5,
+                    Card(
+                      child: SizedBox(
+                        child: Image.asset(assets.imgJogadorDeFutebol),
                       ),
                     ),
-                    topDashGridElement(
-                      context: context,
-                      leading: 'Nome: ',
-                      title: widget.jogador.nome,
-                    ),
-                    topDashGridElement(
-                      context: context,
-                      leading: 'Sobrenome: ',
-                      title: widget.jogador.sobrenome,
-                    ),
-                    topDashGridElement(
-                      context: context,
-                      leading: 'Apelido: ',
-                      title: widget.jogador.apelido ?? "Não Tem",
-                    ),
-                    topDashGridElement(
-                      context: context,
-                      leading: 'Equipa: ',
-                      title: widget.jogador.nomeDaEquipa ?? "Sem Equipa",
-                    ),
-                    topDashGridElement(
-                      context: context,
-                      leading: 'Gols: ',
-                      title: '#gols',
-                    ), //TODO: get from class
+                    ListView(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            'Informações',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        ),
+                        topDashGridElement(
+                          context: context,
+                          leading: 'Nome: ',
+                          title: widget.jogador.nome,
+                        ),
+                        topDashGridElement(
+                          context: context,
+                          leading: 'Sobrenome: ',
+                          title: widget.jogador.sobrenome,
+                        ),
+                        topDashGridElement(
+                          context: context,
+                          leading: 'Apelido: ',
+                          title: widget.jogador.apelido ?? "Não Tem",
+                        ),
+                        topDashGridElement(
+                          context: context,
+                          leading: 'Equipa: ',
+                          title: widget.jogador.nomeDaEquipa ?? "Sem Equipa",
+                        ),
+                        topDashGridElement(
+                          context: context,
+                          leading: 'Gols: ',
+                          title: '#gols',
+                        ), //TODO: get from class
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
