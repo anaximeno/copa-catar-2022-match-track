@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Arbitro;
+use App\Http\Requests\ArbitroRequest;
 
 class ArbitroController extends Controller
 {
@@ -20,13 +20,12 @@ class ArbitroController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ArbitroRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArbitroRequest $request)
     {
-        $attrs = $request->only(['nome', 'sobrenome', 'idade']);
-        return Arbitro::create($attrs);
+        return Arbitro::create($request->validated());
     }
 
     /**
@@ -43,14 +42,14 @@ class ArbitroController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ArbitroRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ArbitroRequest $request, $id)
     {
         $arbitro = Arbitro::findOrFail($id);
-        $attrs = $request->only(['nome', 'sobrenome', 'idade']);
+        $attrs = $request->validated();
         $arbitro->update($attrs);
         return $arbitro;
     }
