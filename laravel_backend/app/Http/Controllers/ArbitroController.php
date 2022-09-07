@@ -49,8 +49,7 @@ class ArbitroController extends Controller
     public function update(ArbitroRequest $request, $id)
     {
         $arbitro = Arbitro::findOrFail($id);
-        $attrs = $request->validated();
-        $arbitro->update($attrs);
+        $arbitro->update($request->validated());
         return $arbitro;
     }
 
