@@ -54,55 +54,58 @@ class _ViewConfrontosState extends State<ViewConfrontos> {
             Colors.teal,
           ];
 
-          return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
-            itemCount: confrontos.length,
-            itemBuilder: ((context, index) {
-              return MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: _getOnTapCallback(context, confrontos[index]),
-                  child: Container(
-                    width: 200,
-                    height: 200,
-                    margin: const EdgeInsets.all(8),
-                    child: SizedBox(
-                      child: Column(
-                        children: [
-                          Card(
-                            clipBehavior: Clip.antiAlias,
-                            elevation: 1.1,
-                            child: Image.asset('images/stadium.jpg'),
-                          ),
-                          Card(
-                            elevation: 1.1,
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  onTap: _getOnTapCallback(context, confrontos[index]),
-                                  leading: Icon(
-                                    Icons.sports_soccer_outlined,
-                                    color: colorsList[index % colorsList.length],
-                                  ),
-                                  title: Text(
-                                    '${confrontos[index].equipaCasa.nome} VS ${confrontos[index].equipaVisita.nome}',
-                                  ),
-                                  subtitle: Text(
-                                    'Dia ${confrontos[index].dia} em ${confrontos[index].local} no estadio ${confrontos[index].estadio}',
-                                  ),
-                                ),
-                              ],
+          return SizedBox(
+            width: 800,
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemCount: confrontos.length,
+              itemBuilder: ((context, index) {
+                return MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: _getOnTapCallback(context, confrontos[index]),
+                    child: Container(
+                      width: 200,
+                      height: 200,
+                      margin: const EdgeInsets.all(8),
+                      child: SizedBox(
+                        child: Column(
+                          children: [
+                            Card(
+                              clipBehavior: Clip.antiAlias,
+                              elevation: 1.1,
+                              child: Image.asset('images/stadium.jpg'),
                             ),
-                          ),
-                        ],
+                            Card(
+                              elevation: 1.1,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    onTap: _getOnTapCallback(context, confrontos[index]),
+                                    leading: Icon(
+                                      Icons.sports_soccer_outlined,
+                                      color: colorsList[index % colorsList.length],
+                                    ),
+                                    title: Text(
+                                      '${confrontos[index].equipaCasa.nome} VS ${confrontos[index].equipaVisita.nome}',
+                                    ),
+                                    subtitle: Text(
+                                      'Dia ${confrontos[index].dia} em ${confrontos[index].local} no estadio ${confrontos[index].estadio}',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              );
-            }),
+                );
+              }),
+            ),
           );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
