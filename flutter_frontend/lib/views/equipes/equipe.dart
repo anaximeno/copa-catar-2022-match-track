@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_frontend/views/jogadores/jogador.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -9,17 +10,16 @@ class Equipe {
   final int? numberOfGols;
   final int? numberOfCartoes;
   final int? numberOfSubstituicoes;
-  final int? numberOfJogadores;
+  final List<Jogador>? jogadores;
 
-  const Equipe({
-    required this.id,
-    required this.nome,
-    required this.localPertencente,
-    this.numberOfGols,
-    this.numberOfCartoes,
-    this.numberOfSubstituicoes,
-    this.numberOfJogadores,
-  });
+  const Equipe(
+      {required this.id,
+      required this.nome,
+      required this.localPertencente,
+      this.numberOfGols,
+      this.numberOfCartoes,
+      this.numberOfSubstituicoes,
+      this.jogadores});
 
   factory Equipe.fromJSON(Map<String, dynamic> json) {
     return Equipe(
@@ -29,8 +29,14 @@ class Equipe {
       numberOfGols: json['gols']?.length,
       numberOfCartoes: json['cartoes']?.length,
       numberOfSubstituicoes: json['substituicoes']?.length,
-      numberOfJogadores: json['jogadores']?.length,
+      jogadores: json['jogadores']
+          ?.map<Jogador>((json) => Jogador.fromJSON(json))
+          .toList(),
     );
+  }
+
+  get numberOfJogadores {
+    return jogadores?.length;
   }
 }
 
@@ -113,6 +119,54 @@ class ViewEquipe extends StatelessWidget {
                     ],
                   ),
                 ),
+                Card(
+                  color: Theme.of(context).backgroundColor,
+                  elevation: 0,
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        child: Text(
+                          'Jogadores',
+                          style: Theme.of(context).textTheme.headline3,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      ConstrainedBox(
+                        constraints: const BoxConstraints(
+                            maxWidth: 400, maxHeight: 1000),
+                        child: ListView.builder(
+                          itemBuilder: ((context, index) {
+                            final Jogador? jogador =
+                                equipe.jogadores?[index];
+                            final String apelido = jogador?.apelido != null
+                                ? ' "${jogador?.apelido}"'
+                                : "";
+                            return Card(
+                              elevation: 0.5,
+                              shadowColor: Theme.of(context).shadowColor,
+                              child: ListTile(
+                                leading: Text(
+                                  '${jogador?.numeroCamisa}',
+                                  style:
+                                      Theme.of(context).textTheme.headline6,
+                                ),
+                                title: Text(
+                                  '${jogador?.nome}$apelido ${jogador?.sobrenome}',
+                                  style:
+                                      Theme.of(context).textTheme.bodyLarge,
+                                ),
+                                subtitle: Text('${jogador?.posicao}'),
+                                trailing: const Icon(Icons.arrow_drop_up_outlined),
+                              ),
+                            );
+                          }),
+                          itemCount: equipe.jogadores?.length ?? 0,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
