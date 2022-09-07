@@ -59,6 +59,25 @@ class ViewEquipe extends StatelessWidget {
     required this.equipe,
   });
 
+  Widget gridDashSection(BuildContext context, int stat, String title) {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text(
+            '$stat',
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headline5,
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,43 +103,14 @@ class ViewEquipe extends StatelessWidget {
                   child: GridView.count(
                     crossAxisCount: 2,
                     children: [
-                      Card(
-                        child: Center(
-                          child: Text(
-                            'Gols: ${equipe.numberOfGols ?? 0}',
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ),
-                      ),
-                      Card(
-                        child: Center(
-                          child: Text(
-                            'Substituições: ${equipe.numberOfSubstituicoes ?? 0}',
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ),
-                      ),
-                      Card(
-                        child: Center(
-                          child: Text(
-                            'Jogadores: ${equipe.numberOfJogadores ?? 0}',
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ),
-                      ),
-                      Card(
-                        child: Center(
-                          child: Text(
-                            'Cartões: ${equipe.numberOfCartoes ?? 0}',
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ),
-                      ),
+                      gridDashSection(context, equipe.numberOfGols??0, 'Gols'),
+                      gridDashSection(context, equipe.numberOfSubstituicoes??0, 'Substituições'),
+                      gridDashSection(context, equipe.numberOfJogadores??0, 'Jogadores'),
+                      gridDashSection(context, equipe.numberOfCartoes??0, 'Catões'),
                     ],
                   ),
                 ),
                 Card(
-                  color: Theme.of(context).backgroundColor,
                   elevation: 0,
                   child: Column(
                     children: [
@@ -137,27 +127,26 @@ class ViewEquipe extends StatelessWidget {
                             maxWidth: 400, maxHeight: 1000),
                         child: ListView.builder(
                           itemBuilder: ((context, index) {
-                            final Jogador? jogador =
-                                equipe.jogadores?[index];
+                            final Jogador? jogador = equipe.jogadores?[index];
                             final String apelido = jogador?.apelido != null
                                 ? ' "${jogador?.apelido}"'
                                 : "";
                             return Card(
                               elevation: 0.5,
+                              color: Theme.of(context).backgroundColor,
                               shadowColor: Theme.of(context).shadowColor,
                               child: ListTile(
                                 leading: Text(
                                   '${jogador?.numeroCamisa}',
-                                  style:
-                                      Theme.of(context).textTheme.headline6,
+                                  style: Theme.of(context).textTheme.headline6,
                                 ),
                                 title: Text(
                                   '${jogador?.nome}$apelido ${jogador?.sobrenome}',
-                                  style:
-                                      Theme.of(context).textTheme.bodyLarge,
+                                  style: Theme.of(context).textTheme.bodyLarge,
                                 ),
                                 subtitle: Text('${jogador?.posicao}'),
-                                trailing: const Icon(Icons.arrow_drop_up_outlined),
+                                trailing:
+                                    const Icon(Icons.arrow_drop_up_outlined),
                               ),
                             );
                           }),
