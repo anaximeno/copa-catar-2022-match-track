@@ -39,12 +39,18 @@ class EquipesController extends Controller
             ->filter($cartoesFilter)
             ->toArray());
 
+        $jogadores = $equipa->jogadores->map(function($jogador){
+            $jogador['gols'] = $jogador->gols;
+            $jogador['cartoes'] = $jogador->cartoes;
+            return $jogador;
+        });
+
         return new Collection([
             'id' => $equipa->id,
             'nome' => $equipa->nome,
             'simbolo' => $equipa->simbolo,
             'local_pertencente' => $equipa->local_pertencente,
-            'jogadores' => $equipa->jogadores,
+            'jogadores' => $jogadores,
             'gols' => $gols,
             'substituicoes' => $equipa->substituicoes,
             'cartoes' => $cartoes,
