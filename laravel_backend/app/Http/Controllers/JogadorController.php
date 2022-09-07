@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\JogadorRequest;
 use Illuminate\Http\Request;
 use App\Models\Jogador;
 use Illuminate\Database\Eloquent\Collection;
@@ -39,15 +40,12 @@ class JogadorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\JogadorRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(JogadorRequest $request)
     {
-        $attrs = $request->only(
-            ['nome', 'sobrenome', 'apelido', 'idade', 'id_equipa', 'posicao', 'numero_camisa']
-        );
-        return $this->formatJogador(Jogador::create($attrs));
+        return $this->formatJogador(Jogador::create($request->validated()));
     }
 
     /**
@@ -64,17 +62,14 @@ class JogadorController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\JogadorRequest $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(JogadorRequest $request, $id)
     {
-        $attrs = $request->only(
-            ['nome', 'sobrenome', 'apelido', 'idade', 'id_equipa', 'posicao', 'numero_camisa']
-        );
         $jogador = Jogador::findOrFail($id);
-        $jogador->update($attrs);
+        $jogador->update($request->validated());
         return $this->formatJogador($jogador);
     }
 
