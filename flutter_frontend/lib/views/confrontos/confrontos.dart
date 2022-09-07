@@ -31,6 +31,12 @@ class _ViewConfrontosState extends State<ViewConfrontos> {
     _confrontos = fetchConfrontos();
   }
 
+  _getOnTapCallback(BuildContext context, Confronto confronto) {
+    return (){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewConfronto(confronto)));
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Confronto>>(
@@ -38,17 +44,62 @@ class _ViewConfrontosState extends State<ViewConfrontos> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final confrontos = snapshot.data!;
+          const colorsList = [
+            Colors.red,
+            Colors.blue,
+            Colors.amber,
+            Colors.green,
+            Colors.pink,
+            Colors.orange,
+            Colors.teal,
+          ];
 
-          return ListView.builder(
+          return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
             itemCount: confrontos.length,
             itemBuilder: ((context, index) {
-              return ListTile(
-                leading: const Icon(Icons.sports_soccer_outlined),
-                title: Text(
-                  '${confrontos[index].equipaCasa.nome} VS ${confrontos[index].equipaVisita.nome}',
-                ),
-                subtitle: Text(
-                  'Dia ${confrontos[index].dia} em ${confrontos[index].local} no estadio ${confrontos[index].estadio}',
+              return MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: _getOnTapCallback(context, confrontos[index]),
+                  child: Container(
+                    width: 200,
+                    height: 200,
+                    margin: const EdgeInsets.all(8),
+                    child: SizedBox(
+                      child: Column(
+                        children: [
+                          Card(
+                            clipBehavior: Clip.antiAlias,
+                            elevation: 1.1,
+                            child: Image.asset('images/stadium.jpg'),
+                          ),
+                          Card(
+                            elevation: 1.1,
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  onTap: _getOnTapCallback(context, confrontos[index]),
+                                  leading: Icon(
+                                    Icons.sports_soccer_outlined,
+                                    color: colorsList[index % colorsList.length],
+                                  ),
+                                  title: Text(
+                                    '${confrontos[index].equipaCasa.nome} VS ${confrontos[index].equipaVisita.nome}',
+                                  ),
+                                  subtitle: Text(
+                                    'Dia ${confrontos[index].dia} em ${confrontos[index].local} no estadio ${confrontos[index].estadio}',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               );
             }),

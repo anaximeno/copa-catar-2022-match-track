@@ -81,3 +81,20 @@ Future<Confronto> fetchConfronto({required final int id}) async {
     throw Exception('Failed to load confronto');
   }
 }
+
+class ViewConfronto extends StatelessWidget {
+  final Confronto confronto;
+
+  const ViewConfronto(this.confronto, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          '${confronto.equipaCasa.nome} VS ${confronto.equipaVisita.nome}',
+        ),
+      ),
+    );
+  }
+}
