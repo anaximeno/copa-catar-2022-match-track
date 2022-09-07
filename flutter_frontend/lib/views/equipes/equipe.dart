@@ -120,7 +120,7 @@ class ViewEquipe extends StatelessWidget {
                       gridDashSection(
                           context, equipe.numberOfJogadores ?? 0, 'Jogadores'),
                       gridDashSection(
-                          context, equipe.numberOfCartoes ?? 0, 'Catões'),
+                          context, equipe.numberOfCartoes ?? 0, 'Cartões'),
                     ],
                   ),
                 ),
