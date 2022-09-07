@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SubstituicaoRequest;
 use Illuminate\Http\Request;
 use App\Models\Substituicao;
 use Illuminate\Database\Eloquent\Collection;
@@ -45,19 +46,12 @@ class SubstituicaoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\SubstituicaoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubstituicaoRequest $request)
     {
-        $attrs = $request->only([
-            'id_jogador_saiu',
-            'id_jogador_entrou',
-            'id_equipa',
-            'id_confronto'
-        ]);
-        //TODO: update jogadores em campo
-        return $this->formatSubstituicao(Substituicao::create($attrs));
+        return $this->formatSubstituicao(Substituicao::create($request->validated()));
     }
 
     /**
@@ -74,21 +68,14 @@ class SubstituicaoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\SubstituicaoRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SubstituicaoRequest $request, $id)
     {
         $substituicao = Substituicao::findOrFail($id);
-        $attrs = $request->only([
-            'id_jogador_saiu',
-            'id_jogador_entrou',
-            'id_equipa',
-            'id_confronto'
-        ]);
-        $substituicao->update($attrs);
-        //TODO: update jogadores em campo
+        $substituicao->update($request->validated());
         return $this->formatSubstituicao($substituicao);
     }
 
