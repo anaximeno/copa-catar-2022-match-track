@@ -60,7 +60,6 @@ class _ViewEquipesState extends State<ViewEquipes> {
                   leading: Image.asset(
                     assets.imgClubeDeFutebol,
                     scale: 10,
-                    colorBlendMode: BlendMode.colorBurn,
                   ),
                   title: Text(equipes[index].nome),
                   subtitle: Text('De: ${equipes[index].localPertencente}'),

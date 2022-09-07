@@ -60,20 +60,18 @@ class ViewEquipe extends StatelessWidget {
     required this.equipe,
   });
 
-  Widget gridDashSection(BuildContext context, int stat, String title) {
+  Widget gridDashSection({
+    required BuildContext context,
+    required int stat,
+    required String title,
+  }) {
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(
-            '$stat',
-            style: Theme.of(context).textTheme.headline3,
-          ),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.headline5,
-          )
+          Text('$stat', style: Theme.of(context).textTheme.headline3),
+          Text(title, style: Theme.of(context).textTheme.headline5)
         ],
       ),
     );
@@ -115,13 +113,25 @@ class ViewEquipe extends StatelessWidget {
                     crossAxisCount: 2,
                     children: [
                       gridDashSection(
-                          context, equipe.numberOfGols ?? 0, 'Gols'),
-                      gridDashSection(context,
-                          equipe.numberOfSubstituicoes ?? 0, 'Substituições'),
+                        context: context,
+                        stat: equipe.numberOfGols ?? 0,
+                        title: 'Gols',
+                      ),
                       gridDashSection(
-                          context, equipe.numberOfJogadores ?? 0, 'Jogadores'),
+                        context: context,
+                        stat: equipe.numberOfSubstituicoes ?? 0,
+                        title: 'Substituições',
+                      ),
                       gridDashSection(
-                          context, equipe.numberOfCartoes ?? 0, 'Cartões'),
+                        context: context,
+                        stat: equipe.numberOfJogadores ?? 0,
+                        title: 'Jogadores',
+                      ),
+                      gridDashSection(
+                        context: context,
+                        stat: equipe.numberOfCartoes ?? 0,
+                        title: 'Cartões',
+                      ),
                     ],
                   ),
                 ),
