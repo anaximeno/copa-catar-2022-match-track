@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Copa Catar 2022 - Match Tracker')),
       body: Center(
         child: _sections.elementAt(_selectedIndex),
       ),

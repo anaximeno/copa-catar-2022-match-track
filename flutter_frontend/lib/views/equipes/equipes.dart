@@ -50,7 +50,7 @@ class _ViewEquipesState extends State<ViewEquipes> {
                     scale: 10,
                     colorBlendMode: BlendMode.colorBurn,
                   ),
-                  title: Text('F.C. ${equipes[index].nome}'),
+                  title: Text(equipes[index].nome),
                   subtitle: Text('De: ${equipes[index].localPertencente}'),
                   onTap: (() {
                     Navigator.of(context).push(
