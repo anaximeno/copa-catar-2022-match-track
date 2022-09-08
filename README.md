@@ -21,7 +21,7 @@ docker compose up
 docker compose exec myapp php artisan db:seed
 ```
 
-**4. Configurar o endereço IP no arquivo `flutter_frontend/lib/misc/configs.dart`, modificando a variável `const hostIpAddress = '192.168.1.69'` com o IP da sua máquina no lugar.**
+**4. Configurar o endereço IP no arquivo `flutter_frontend/lib/misc/configs.dart`, modificando a variável `const hostIpAddress = '192.168.1.69'` com o IP da sua máquina no lugar. O IP tem de ser definido numa constante pois caso se queira testar a aplicação no celular, isso vai garantir acesso do celular ao servidor Laravel se o computador e o celular estiverem conectados na mesma rede Wifi.**
 
 **5. Executar a aplicação Flutter, com os seguintes comandos:**
 ```bash
