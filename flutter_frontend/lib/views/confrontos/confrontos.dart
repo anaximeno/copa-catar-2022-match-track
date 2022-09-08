@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../misc/assets.dart' as assets;
+import '../../misc/configs.dart' as configs;
 import 'dart:convert';
 import 'confronto.dart';
 
@@ -11,8 +12,7 @@ List<Confronto> parseConfrontos(String responseBody) {
 }
 
 Future<List<Confronto>> fetchConfrontos() async {
-  final response =
-      await http.get(Uri.parse('http://0.0.0.0:8000/api/v1/confrontos'));
+  final response = await http.get(Uri.parse('${configs.ipAddress}/api/v1/confrontos'));
   return compute(parseConfrontos, response.body);
 }
 

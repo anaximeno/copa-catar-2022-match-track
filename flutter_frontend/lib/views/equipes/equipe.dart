@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_frontend/views/jogadores/jogador.dart';
 import 'package:http/http.dart' as http;
 import '../../misc/assets.dart' as assets;
+import '../../misc/configs.dart' as configs;
 import 'dart:convert';
 
 class Equipe {
@@ -35,15 +36,14 @@ class Equipe {
         (json['jogadores'] ?? json['jogadores_em_campo'])?.length;
 
     return Equipe(
-      id: json['id'],
-      nome: 'F.C. ${json['nome']}',
-      localPertencente: json['local_pertencente'],
-      numberOfGols: json['gols']?.length,
-      numberOfCartoes: json['cartoes']?.length,
-      numberOfSubstituicoes: json['substituicoes']?.length,
-      jogadores: jogadores,
-      nJogadores: nJogadores
-    );
+        id: json['id'],
+        nome: 'F.C. ${json['nome']}',
+        localPertencente: json['local_pertencente'],
+        numberOfGols: json['gols']?.length,
+        numberOfCartoes: json['cartoes']?.length,
+        numberOfSubstituicoes: json['substituicoes']?.length,
+        jogadores: jogadores,
+        nJogadores: nJogadores);
   }
 
   get numberOfJogadores {
@@ -52,8 +52,7 @@ class Equipe {
 }
 
 Future<Equipe> fetchEquipe({required final int id}) async {
-  final response =
-      await http.get(Uri.parse('http://0.0.0.0:8000/api/v1/equipes/$id'));
+  final response = await http.get(Uri.parse('${configs.ipAddress}/api/v1/equipes/$id'));
 
   if (response.statusCode == 200) {
     return Equipe.fromJSON(jsonDecode(response.body));

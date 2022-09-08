@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../equipes/equipe.dart';
 import 'package:http/http.dart' as http;
 import '../../misc/assets.dart' as assets;
+import '../../misc/configs.dart' as configs;
 import 'dart:convert';
 
 class Arbitro {
@@ -76,7 +77,7 @@ class Confronto {
 
 Future<Confronto> fetchConfronto({required final int id}) async {
   final response =
-      await http.get(Uri.parse('http://0.0.0.0:8000/api/v1/confrontos/$id'));
+      await http.get(Uri.parse('${configs.ipAddress}/api/v1/confrontos/$id'));
 
   if (response.statusCode == 200) {
     return Confronto.fromJSON(jsonDecode(response.body));

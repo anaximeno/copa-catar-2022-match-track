@@ -8,7 +8,11 @@ Para testar a aplicação, os seguintes passos devem ser tomados:
 ```bash
 docker compose up
 ```
-2. Fazer os seed dos dados para teste na base de dados:
+2. Aguarde até ver uma mensagem semelhante no terminal:
+```
+[Note] /opt/bitnami/mariadb/sbin/mysqld: ready for connections.
+```
+3. Fazer os seed dos dados para teste na base de dados:
 ```bash
 docker compose exec myapp php artisan db:seed
 ```

@@ -5,7 +5,10 @@ Aplicação fullstack estruturada a apresentar jogos da copa do mundo de futebol
 
 O frontend é feito completamente usando a framework Flutter com a linguagem de programação Dart, e o backend
 usando o framework Laravel para a linguagem de programação PHP.
-""";
+
+Caso aparecer a mensagem 'Connection Refused' nas outras secções, veja o ponto 2 da secção Como Usar do README na raíz do projeto.
+Após isso faça um Hot restart da aplicação.
+"""; //FIXME: Text is not appearing completely on device
 
 const version = '0.8.0';
 

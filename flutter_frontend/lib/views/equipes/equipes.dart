@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../misc/assets.dart' as assets;
+import '../../misc/configs.dart' as configs;
 import 'dart:convert';
 import 'equipe.dart';
 
@@ -12,7 +13,7 @@ List<Equipe> parseEquipes(String responseBody) {
 
 Future<List<Equipe>> fetchEquipes() async {
   final response =
-      await http.get(Uri.parse('http://0.0.0.0:8000/api/v1/equipes'));
+      await http.get(Uri.parse('${configs.ipAddress}/api/v1/equipes'));
   return compute(parseEquipes, response.body);
 }
 
