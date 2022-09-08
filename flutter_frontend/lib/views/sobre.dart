@@ -8,9 +8,9 @@ usando o framework Laravel para a linguagem de programação PHP.
 
 Caso aparecer a mensagem 'Connection Refused' nas outras secções, veja o ponto 2 da secção Como Usar do README na raíz do projeto.
 Após isso faça um Hot restart da aplicação.
-"""; //FIXME: Text is not appearing completely on device
+""";
 
-const version = '0.8.0';
+const version = '0.9.0';
 
 const author = 'Anaxímeno Brito';
 
@@ -26,21 +26,24 @@ class ViewSobre extends StatelessWidget {
         child: SizedBox(
           width: generalWidth,
           child: Container(
-            margin: const EdgeInsets.only(top: 20),
+            margin: const EdgeInsets.only(top: 10),
             child: Column(
               children: [
                 Text(
-                  'Copa Catar 2022 - Match Tracker',
+                  'Match Tracker',
                   style: Theme.of(context).textTheme.headline4,
                 ),
                 Text(
                   'Versão $version',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                Text(
-                  descriptionText,
-                  style: Theme.of(context).textTheme.headline6,
-                  textAlign: TextAlign.center,
+                Container(
+                  margin: const EdgeInsets.only(top: 40, bottom: 40),
+                  child: Text(
+                    descriptionText,
+                    style: Theme.of(context).textTheme.headline6,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 Text(
                   '2022 - $author',
