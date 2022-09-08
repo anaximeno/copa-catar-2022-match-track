@@ -92,75 +92,83 @@ class _ViewJogadorState extends State<ViewJogador> {
         title: const Text('Jogador'),
       ),
       body: Center(
-        child: ListView(
-          children: [
-            Card(
-              child: ListTile(
-                leading: Text(
-                  '${widget.jogador.numeroCamisa}',
-                  style: Theme.of(context).textTheme.headline4,
+        child: SizedBox(
+          width: widget.generalWidth,
+          child: ListView(
+            children: [
+              Card(
+                child: ListTile(
+                  leading: Text(
+                    '${widget.jogador.numeroCamisa}',
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                  title: Text(
+                    widget.jogador.nomeCompletoComApelido,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  subtitle: Text(
+                    widget.jogador.posicao,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                 ),
+              ),
+              Card(
+                child: Image.asset(assets.imgJogadorDeFutebol, scale: 1.2),
+              ),
+              ListTile(
                 title: Text(
-                  widget.jogador.nomeCompletoComApelido,
+                  'Informações',
+                  textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline5,
                 ),
-                subtitle: Text(
-                  widget.jogador.posicao,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
               ),
-            ),
-            Card(
-              child: Image.asset(assets.imgJogadorDeFutebol, scale: 1.2),
-            ),
-            ListTile(
-              title: Text(
-                'Informações',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline5,
+              topDashGridElement(
+                context: context,
+                leading: 'Número: ',
+                title: '${widget.jogador.numeroCamisa}',
               ),
-            ),
-            topDashGridElement(
-              context: context,
-              leading: 'Número: ',
-              title: '${widget.jogador.numeroCamisa}',
-            ),
-            topDashGridElement(
-              context: context,
-              leading: 'Nome: ',
-              title: widget.jogador.nome,
-            ),
-            topDashGridElement(
-              context: context,
-              leading: 'Sobrenome: ',
-              title: widget.jogador.sobrenome,
-            ),
-            topDashGridElement(
-              context: context,
-              leading: 'Apelido: ',
-              title: widget.jogador.apelido ?? "Não Tem",
-            ),
-            topDashGridElement(
-              context: context,
-              leading: 'Equipa: ',
-              title: widget.jogador.nomeDaEquipa ?? "Sem Equipa",
-            ),
-            topDashGridElement(
-              context: context,
-              leading: 'Posição: ',
-              title: widget.jogador.posicao,
-            ),
-            topDashGridElement(
-              context: context,
-              leading: 'Gols: ',
-              title: '${widget.jogador.nGols ?? 0}',
-            ),
-            topDashGridElement(
-              context: context,
-              leading: 'Cartões: ',
-              title: '${widget.jogador.nCartoes ?? 0}',
-            ),
-          ],
+              topDashGridElement(
+                context: context,
+                leading: 'Nome: ',
+                title: widget.jogador.nome,
+              ),
+              topDashGridElement(
+                context: context,
+                leading: 'Sobrenome: ',
+                title: widget.jogador.sobrenome,
+              ),
+              topDashGridElement(
+                context: context,
+                leading: 'Apelido: ',
+                title: widget.jogador.apelido ?? "Não Tem",
+              ),
+              topDashGridElement(
+                context: context,
+                leading: 'Idade: ',
+                title: '${widget.jogador.idade}',
+              ),
+              topDashGridElement(
+                context: context,
+                leading: 'Equipa: ',
+                title: widget.jogador.nomeDaEquipa ?? "Sem Equipa",
+              ),
+              topDashGridElement(
+                context: context,
+                leading: 'Posição: ',
+                title: widget.jogador.posicao,
+              ),
+              topDashGridElement(
+                context: context,
+                leading: 'Gols: ',
+                title: '${widget.jogador.nGols ?? 0}',
+              ),
+              topDashGridElement(
+                context: context,
+                leading: 'Cartões: ',
+                title: '${widget.jogador.nCartoes ?? 0}',
+              ),
+            ],
+          ),
         ),
       ),
     );
