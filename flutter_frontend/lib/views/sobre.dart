@@ -17,50 +17,38 @@ const author = 'Anaxímeno Brito';
 class ViewSobre extends StatelessWidget {
   final double generalWidth;
 
-  const ViewSobre({super.key, this.generalWidth = 600});
+  const ViewSobre({super.key, this.generalWidth = 1000});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: generalWidth,
-        child: Flex(
-          direction: Axis.vertical,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 20),
-              child: Column(
-                children: [
-                  Text(
-                    'Copa Catar 2022 - Match Tracker',
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
-                  Text(
-                    'Versão $version',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.only(top: 40),
-                child: Text(
+    return SingleChildScrollView(
+      child: Center(
+        child: SizedBox(
+          width: generalWidth,
+          child: Container(
+            margin: const EdgeInsets.only(top: 20),
+            child: Column(
+              children: [
+                Text(
+                  'Copa Catar 2022 - Match Tracker',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                Text(
+                  'Versão $version',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                Text(
                   descriptionText,
                   style: Theme.of(context).textTheme.headline6,
                   textAlign: TextAlign.center,
                 ),
-              ),
-            ),
-            Expanded(
-              child: Center(
-                child: Text(
-                  'Autor: $author',
+                Text(
+                  '2022 - $author',
                   style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ),
-            )
-          ],
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
