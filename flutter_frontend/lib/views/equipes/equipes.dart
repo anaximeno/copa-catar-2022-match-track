@@ -18,15 +18,15 @@ Future<List<Equipe>> fetchEquipes() async {
 
 class ViewEquipes extends StatefulWidget {
   final Future<List<Equipe>> equipes;
+  final double generalWidth;
 
-  const ViewEquipes({super.key, required this.equipes});
+  const ViewEquipes({super.key, required this.equipes, this.generalWidth = 600});
 
   @override
   State<ViewEquipes> createState() => _ViewEquipesState();
 }
 
 class _ViewEquipesState extends State<ViewEquipes> {
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Equipe>>(
