@@ -96,6 +96,13 @@ class ViewConfronto extends StatefulWidget {
 }
 
 class _ViewConfrontoState extends State<ViewConfronto> {
+  Widget presentEquipeEmConfronto(
+    Equipe equipe, {
+    required BuildContext context,
+  }) {
+    return Container(); //TODO
+  }
+
   @override
   Widget build(BuildContext context) {
     final Confronto confronto = widget.confronto;
@@ -113,7 +120,10 @@ class _ViewConfrontoState extends State<ViewConfronto> {
                 Card(
                   child: ListTile(
                     title: Text(
-                        '${widget.confronto.equipaCasa.nome} VS ${widget.confronto.equipaVisita.nome}'),
+                      '${confronto.equipaCasa.nome} VS ${confronto.equipaVisita.nome}',
+                      style: Theme.of(context).textTheme.headline5,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
                 Card(
@@ -122,16 +132,18 @@ class _ViewConfrontoState extends State<ViewConfronto> {
                 Card(
                   child: ListTile(
                     leading: const Icon(Icons.sports),
-                    title: Text(widget.confronto.arbitro.nomeCompleto),
-                    subtitle:
-                        Text('Tem ${widget.confronto.arbitro.idade} anos'),
-                        trailing: const Text('Arbitro Principal'),
+                    title: Text(confronto.arbitro.nomeCompleto),
+                    subtitle: Text('Tem ${confronto.arbitro.idade} anos'),
+                    trailing: const Text('Arbitro Principal'),
                   ),
                 ),
-                const Card(
-                  child: ListTile(
-                    title: Text('List Tile'),
-                  ),
+                presentEquipeEmConfronto(
+                  confronto.equipaCasa,
+                  context: context,
+                ),
+                presentEquipeEmConfronto(
+                  confronto.equipaVisita,
+                  context: context,
                 ),
               ],
             ),
