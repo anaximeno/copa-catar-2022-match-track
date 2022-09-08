@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'confrontos/confrontos.dart';
 import 'equipes/equipes.dart';
+import './sobre.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
 
     _sections.add(ViewConfrontos(confrontos: fetchConfrontos()));
     _sections.add(ViewEquipes(equipes: fetchEquipes()));
-    _sections.add(const Text('Index 2: Sobre'));
+    _sections.add(ViewSobre());
   }
 
   @override

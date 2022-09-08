@@ -115,7 +115,7 @@ class _ViewConfrontoState extends State<ViewConfronto> {
               title: title,
               subtitle: subtitle,
               trailing: trailing,
-            ), //FIXME: trainling and leading are not aligned, so the gols are not aligned
+            ),
           ),
           Card(
             elevation: 0,
@@ -148,12 +148,12 @@ class _ViewConfrontoState extends State<ViewConfronto> {
     final Confronto confronto = widget.confronto;
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Confronto'),
-        ),
-        body: SingleChildScrollView(
-          child: Center(
-              child: SizedBox(
+      appBar: AppBar(
+        title: const Text('Confronto'),
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: SizedBox(
             width: widget.generalWidth,
             child: Column(
               children: [
@@ -200,16 +200,24 @@ class _ViewConfrontoState extends State<ViewConfronto> {
                           '${confronto.equipaVisita.numberOfGols ?? 0}',
                           style: Theme.of(context).textTheme.headline4,
                         ),
-                        title: Text(confronto.equipaVisita.nome, textAlign: TextAlign.end,),
+                        title: Text(
+                          confronto.equipaVisita.nome,
+                          textAlign: TextAlign.end,
+                        ),
                         trailing: Image.asset(assets.imgClubeDeFutebol),
-                        subtitle: const Text('Visita', textAlign: TextAlign.end,),
+                        subtitle: const Text(
+                          'Visita',
+                          textAlign: TextAlign.end,
+                        ),
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
-          )),
-        ));
+          ),
+        ),
+      ),
+    );
   }
 }
