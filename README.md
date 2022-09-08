@@ -12,7 +12,7 @@ docker compose up
 ```bash
 docker compose exec myapp php artisan db:seed
 ```
-3. Executar a aplicação flutter, com os seguintes comandos:
+3. Executar a aplicação Flutter, com os seguintes comandos:
 ```bash
 cd flutter_frontend
 flutter run --no-sound-null-safety
@@ -20,9 +20,14 @@ flutter run --no-sound-null-safety
 4. Testar a aplicação
 5. Pronto
 
-O segundo passo não tem a necessidade de ser feito toda vez que se deseje testar a aplicação, desde que os containers criados inicialmente estejam preservados. O primeiro seed (caso ocorrer com sucesso) será suficiente para testar a aplicação.
+### Notas
+**Nota 1**: O segundo passo não tem a necessidade de ser feito toda vez que se deseje testar a aplicação, desde que os containers criados inicialmente estejam preservados. O primeiro seed (caso ocorrer com sucesso) será suficiente para testar a aplicação.
 
-<!--TODO
+**Nota 2**: A aplicação em flutter tem todas as plataformas atualmente suportadas pela framework ativadas, então, pode ser testada em todas elas.
+
 ## Imagens
--->
+<img src="imagens/gui-example-image-01.png" alt="Example GUI image 01"/>
+
+
+<img src="imagens/gui-example-image-02.png" alt="Example GUI image 02"/>
 
