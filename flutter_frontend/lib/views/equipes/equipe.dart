@@ -11,6 +11,7 @@ class Equipe {
   final int? numberOfGols;
   final int? numberOfCartoes;
   final int? numberOfSubstituicoes;
+  final int? nJogadores;
   final List<Jogador>? jogadores;
 
   const Equipe(
@@ -20,17 +21,18 @@ class Equipe {
       this.numberOfGols,
       this.numberOfCartoes,
       this.numberOfSubstituicoes,
-      this.jogadores});
+      this.jogadores,
+      this.nJogadores});
 
   factory Equipe.fromJSON(Map<String, dynamic> json) {
-    List<Jogador>? jogadores;
-    try {
-      jogadores = (json['jogadores'] ?? json['jogadores_em_campo'])
-          ?.map<Jogador>((json) => Jogador.fromJSON(json))
-          .toList();
-    } catch(e) {
-      debugPrint(e.toString());
-    }
+    //FIXME: error when trying to get list of jogadores em json['jogadores_em_campo']
+
+    final jogadores = json['jogadores']
+        ?.map<Jogador>((json) => Jogador.fromJSON(json))
+        .toList();
+
+    final nJogadores =
+        (json['jogadores'] ?? json['jogadores_em_campo'])?.length;
 
     return Equipe(
       id: json['id'],
@@ -40,6 +42,7 @@ class Equipe {
       numberOfCartoes: json['cartoes']?.length,
       numberOfSubstituicoes: json['substituicoes']?.length,
       jogadores: jogadores,
+      nJogadores: nJogadores
     );
   }
 

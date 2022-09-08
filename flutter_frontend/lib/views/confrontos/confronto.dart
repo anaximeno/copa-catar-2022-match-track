@@ -89,7 +89,7 @@ class ViewConfronto extends StatefulWidget {
   final Confronto confronto;
   final double generalWidth;
 
-  const ViewConfronto(this.confronto, {super.key, this.generalWidth = 500});
+  const ViewConfronto(this.confronto, {super.key, this.generalWidth = 600});
 
   @override
   State<ViewConfronto> createState() => _ViewConfrontoState();
@@ -99,8 +99,48 @@ class _ViewConfrontoState extends State<ViewConfronto> {
   Widget presentEquipeEmConfronto(
     Equipe equipe, {
     required BuildContext context,
+    required Widget? leading,
+    required Widget? title,
+    required Widget? subtitle,
+    required Widget? trailing,
   }) {
-    return Container(); //TODO
+    return SizedBox(
+      width: widget.generalWidth / 2,
+      height: 300,
+      child: Card(
+        child: ListView(children: [
+          Card(
+            child: ListTile(
+              leading: leading,
+              title: title,
+              subtitle: subtitle,
+              trailing: trailing,
+            ), //FIXME: trainling and leading are not aligned, so the gols are not aligned
+          ),
+          Card(
+            elevation: 0,
+            child: ListTile(
+              title: const Text('Jogadores'),
+              trailing: Text('${equipe.nJogadores ?? 0}'),
+            ),
+          ),
+          Card(
+            elevation: 0,
+            child: ListTile(
+              title: const Text('Cartões'),
+              trailing: Text('${equipe.numberOfCartoes ?? 0}'),
+            ),
+          ),
+          Card(
+            elevation: 0,
+            child: ListTile(
+              title: const Text('Substituições'),
+              trailing: Text('${equipe.numberOfSubstituicoes ?? 0}'),
+            ),
+          ),
+        ]),
+      ),
+    );
   }
 
   @override
@@ -131,20 +171,42 @@ class _ViewConfrontoState extends State<ViewConfronto> {
                 ),
                 Card(
                   child: ListTile(
-                    leading: const Icon(Icons.sports),
-                    title: Text(confronto.arbitro.nomeCompleto),
-                    subtitle: Text('Tem ${confronto.arbitro.idade} anos'),
-                    trailing: const Text('Arbitro Principal'),
+                      leading: const Icon(Icons.sports),
+                      title: Text(confronto.arbitro.nomeCompleto),
+                      subtitle: Text('Tem ${confronto.arbitro.idade} anos'),
+                      trailing: const Text('Arbitro Principal')),
+                ),
+                SizedBox(
+                  width: widget.generalWidth,
+                  height: 400,
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    children: [
+                      presentEquipeEmConfronto(
+                        confronto.equipaCasa,
+                        context: context,
+                        leading: Image.asset(assets.imgClubeDeFutebol),
+                        title: Text(confronto.equipaCasa.nome),
+                        trailing: Text(
+                          '${confronto.equipaCasa.numberOfGols ?? 0}',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        subtitle: const Text('Casa'),
+                      ),
+                      presentEquipeEmConfronto(
+                        confronto.equipaVisita,
+                        context: context,
+                        leading: Text(
+                          '${confronto.equipaVisita.numberOfGols ?? 0}',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        title: Text(confronto.equipaVisita.nome),
+                        trailing: Image.asset(assets.imgClubeDeFutebol),
+                        subtitle: const Text('Visita'),
+                      ),
+                    ],
                   ),
-                ),
-                presentEquipeEmConfronto(
-                  confronto.equipaCasa,
-                  context: context,
-                ),
-                presentEquipeEmConfronto(
-                  confronto.equipaVisita,
-                  context: context,
-                ),
+                )
               ],
             ),
           )),
