@@ -23,6 +23,15 @@ class Equipe {
       this.jogadores});
 
   factory Equipe.fromJSON(Map<String, dynamic> json) {
+    List<Jogador>? jogadores;
+    try {
+      jogadores = (json['jogadores'] ?? json['jogadores_em_campo'])
+          ?.map<Jogador>((json) => Jogador.fromJSON(json))
+          .toList();
+    } catch(e) {
+      debugPrint(e.toString());
+    }
+
     return Equipe(
       id: json['id'],
       nome: 'F.C. ${json['nome']}',
@@ -30,9 +39,7 @@ class Equipe {
       numberOfGols: json['gols']?.length,
       numberOfCartoes: json['cartoes']?.length,
       numberOfSubstituicoes: json['substituicoes']?.length,
-      jogadores: json['jogadores']
-          ?.map<Jogador>((json) => Jogador.fromJSON(json))
-          .toList(),
+      jogadores: jogadores,
     );
   }
 

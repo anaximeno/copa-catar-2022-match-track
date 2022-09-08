@@ -39,8 +39,8 @@ class Jogador {
       posicao: json['posicao'],
       numeroCamisa: json['numero_camisa'],
       apelido: json['apelido'],
-      nGols: json['gols'].length,
-      nCartoes: json['cartoes'].length,
+      nGols: json['gols']?.length,
+      nCartoes: json['cartoes']?.length,
     );
   }
 

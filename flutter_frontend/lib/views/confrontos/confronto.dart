@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../equipes/equipe.dart';
 import 'package:http/http.dart' as http;
+import '../../misc/assets.dart' as assets;
 import 'dart:convert';
 
 class Arbitro {
@@ -23,6 +24,10 @@ class Arbitro {
       sobrenome: json['sobrenome'],
       idade: json['idade'],
     );
+  }
+
+  get nomeCompleto {
+    return '$nome $sobrenome';
   }
 }
 
@@ -55,19 +60,17 @@ class Confronto {
 
   factory Confronto.fromJSON(Map<String, dynamic> json) {
     return Confronto(
-      id: json['id'],
-      local: json['local'],
-      dia: json['dia'],
-      inicio: json['inicio'],
-      fim: json['fim'],
-      estadio: json['estadio'],
-      rodada: json['rodada'],
-      terminou: json['terminou'] == 0 ? false : true,
-      equipaCasa: Equipe.fromJSON(json['equipes']['casa']),
-      equipaVisita: Equipe.fromJSON(json['equipes']['visita']),
-      arbitro: Arbitro.fromJSON(json['arbitro']),
-    );
-    // TODO: add cartões, gols, e substituições
+        id: json['id'],
+        local: json['local'],
+        dia: json['dia'],
+        inicio: json['inicio'],
+        fim: json['fim'],
+        estadio: json['estadio'],
+        rodada: json['rodada'],
+        terminou: json['terminou'] == 0 ? false : true,
+        equipaCasa: Equipe.fromJSON(json['equipes']['casa']),
+        equipaVisita: Equipe.fromJSON(json['equipes']['visita']),
+        arbitro: Arbitro.fromJSON(json['arbitro']));
   }
 }
 
@@ -82,19 +85,57 @@ Future<Confronto> fetchConfronto({required final int id}) async {
   }
 }
 
-class ViewConfronto extends StatelessWidget {
+class ViewConfronto extends StatefulWidget {
   final Confronto confronto;
+  final double generalWidth;
 
-  const ViewConfronto(this.confronto, {super.key});
+  const ViewConfronto(this.confronto, {super.key, this.generalWidth = 500});
 
   @override
+  State<ViewConfronto> createState() => _ViewConfrontoState();
+}
+
+class _ViewConfrontoState extends State<ViewConfronto> {
+  @override
   Widget build(BuildContext context) {
+    final Confronto confronto = widget.confronto;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '${confronto.equipaCasa.nome} VS ${confronto.equipaVisita.nome}',
+        appBar: AppBar(
+          title: const Text('Confronto'),
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Center(
+              child: SizedBox(
+            width: widget.generalWidth,
+            child: Column(
+              children: [
+                Card(
+                  child: ListTile(
+                    title: Text(
+                        '${widget.confronto.equipaCasa.nome} VS ${widget.confronto.equipaVisita.nome}'),
+                  ),
+                ),
+                Card(
+                  child: Image.asset(assets.imgEstadioDeFutebol),
+                ),
+                Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.sports),
+                    title: Text(widget.confronto.arbitro.nomeCompleto),
+                    subtitle:
+                        Text('Tem ${widget.confronto.arbitro.idade} anos'),
+                        trailing: const Text('Arbitro Principal'),
+                  ),
+                ),
+                const Card(
+                  child: ListTile(
+                    title: Text('List Tile'),
+                  ),
+                ),
+              ],
+            ),
+          )),
+        ));
   }
 }
