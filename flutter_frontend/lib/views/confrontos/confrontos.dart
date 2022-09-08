@@ -12,7 +12,8 @@ List<Confronto> parseConfrontos(String responseBody) {
 }
 
 Future<List<Confronto>> fetchConfrontos() async {
-  final response = await http.get(Uri.parse('${configs.ipAddress}/api/v1/confrontos'));
+  final response =
+      await http.get(Uri.parse('${configs.ipAddress}/api/v1/confrontos'));
   return compute(parseConfrontos, response.body);
 }
 
@@ -35,6 +36,8 @@ class _ViewConfrontosState extends State<ViewConfrontos> {
 
   @override
   Widget build(BuildContext context) {
+    final int crossAxisCount = MediaQuery.of(context).size.width > 800 ? 2 : 1;
+
     return FutureBuilder<List<Confronto>>(
       future: widget.confrontos,
       builder: (context, snapshot) {
@@ -49,12 +52,11 @@ class _ViewConfrontosState extends State<ViewConfrontos> {
             Colors.orange,
             Colors.teal,
           ];
-
           return SizedBox(
             width: 800,
             child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
               ),
               itemCount: confrontos.length,
               itemBuilder: ((context, index) {
