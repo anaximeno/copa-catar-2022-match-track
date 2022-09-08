@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_frontend/views/jogadores/jogador.dart';
 import 'package:http/http.dart' as http;
@@ -97,6 +98,7 @@ class ViewEquipe extends StatelessWidget {
           title: const Text('Equipe'),
         ),
         body: SingleChildScrollView(
+          dragStartBehavior: DragStartBehavior.start,
           child: Center(
             child: Column(
               children: [
@@ -123,6 +125,7 @@ class ViewEquipe extends StatelessWidget {
                   width: generalWidth,
                   height: generalWidth,
                   child: GridView.count(
+                    physics: const NeverScrollableScrollPhysics(),
                     crossAxisCount: 2,
                     children: [
                       gridDashSection(
@@ -163,9 +166,10 @@ class ViewEquipe extends StatelessWidget {
                       ConstrainedBox(
                         constraints: BoxConstraints(
                           maxWidth: generalWidth,
-                          maxHeight: 1000,
+                          maxHeight: 80.0 * (equipe.jogadores?.length ?? 0),
                         ),
                         child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: ((context, index) {
                             final Jogador? jogador = equipe.jogadores?[index];
                             return Card(
