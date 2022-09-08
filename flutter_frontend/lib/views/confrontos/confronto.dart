@@ -151,7 +151,7 @@ class _ViewConfrontoState extends State<ViewConfronto> {
   @override
   Widget build(BuildContext context) {
     final Confronto confronto = widget.confronto;
-    final int crossAxisCount = MediaQuery.of(context).size.width > 800 ? 2 : 1;
+    final int crossAxisCount = MediaQuery.of(context).size.width > 600 ? 2 : 1;
 
     return Scaffold(
       appBar: AppBar(
