@@ -189,7 +189,7 @@ class _ViewConfrontoState extends State<ViewConfronto> {
                         title: Text(confronto.equipaCasa.nome),
                         trailing: Text(
                           '${confronto.equipaCasa.numberOfGols ?? 0}',
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.headline4,
                         ),
                         subtitle: const Text('Casa'),
                       ),
@@ -198,11 +198,11 @@ class _ViewConfrontoState extends State<ViewConfronto> {
                         context: context,
                         leading: Text(
                           '${confronto.equipaVisita.numberOfGols ?? 0}',
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.headline4,
                         ),
-                        title: Text(confronto.equipaVisita.nome),
+                        title: Text(confronto.equipaVisita.nome, textAlign: TextAlign.end,),
                         trailing: Image.asset(assets.imgClubeDeFutebol),
-                        subtitle: const Text('Visita'),
+                        subtitle: const Text('Visita', textAlign: TextAlign.end,),
                       ),
                     ],
                   ),
