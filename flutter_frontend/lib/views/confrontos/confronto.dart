@@ -89,8 +89,9 @@ Future<Confronto> fetchConfronto({required final int id}) async {
 class ViewConfronto extends StatefulWidget {
   final Confronto confronto;
   final double generalWidth;
+  final double generalHeight;
 
-  const ViewConfronto(this.confronto, {super.key, this.generalWidth = 600});
+  const ViewConfronto(this.confronto, {super.key, this.generalWidth = 600, this.generalHeight = 450});
 
   @override
   State<ViewConfronto> createState() => _ViewConfrontoState();
@@ -107,39 +108,42 @@ class _ViewConfrontoState extends State<ViewConfronto> {
   }) {
     return SizedBox(
       width: widget.generalWidth / 2,
-      height: 300,
+      height: widget.generalHeight / 2,
       child: Card(
-        child: ListView(children: [
-          Card(
-            child: ListTile(
-              leading: leading,
-              title: title,
-              subtitle: subtitle,
-              trailing: trailing,
+        child: ListView(
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            Card(
+              child: ListTile(
+                leading: leading,
+                title: title,
+                subtitle: subtitle,
+                trailing: trailing,
+              ),
             ),
-          ),
-          Card(
-            elevation: 0,
-            child: ListTile(
-              title: const Text('Jogadores'),
-              trailing: Text('${equipe.nJogadores ?? 0}'),
+            Card(
+              elevation: 0,
+              child: ListTile(
+                title: const Text('Jogadores'),
+                trailing: Text('${equipe.nJogadores ?? 0}'),
+              ),
             ),
-          ),
-          Card(
-            elevation: 0,
-            child: ListTile(
-              title: const Text('Cartões'),
-              trailing: Text('${equipe.numberOfCartoes ?? 0}'),
+            Card(
+              elevation: 0,
+              child: ListTile(
+                title: const Text('Cartões'),
+                trailing: Text('${equipe.numberOfCartoes ?? 0}'),
+              ),
             ),
-          ),
-          Card(
-            elevation: 0,
-            child: ListTile(
-              title: const Text('Substituições'),
-              trailing: Text('${equipe.numberOfSubstituicoes ?? 0}'),
+            Card(
+              elevation: 0,
+              child: ListTile(
+                title: const Text('Substituições'),
+                trailing: Text('${equipe.numberOfSubstituicoes ?? 0}'),
+              ),
             ),
-          ),
-        ]),
+          ],
+        ),
       ),
     );
   }
@@ -147,6 +151,7 @@ class _ViewConfrontoState extends State<ViewConfronto> {
   @override
   Widget build(BuildContext context) {
     final Confronto confronto = widget.confronto;
+    final int crossAxisCount = MediaQuery.of(context).size.width > 800 ? 2 : 1;
 
     return Scaffold(
       appBar: AppBar(
@@ -179,9 +184,10 @@ class _ViewConfrontoState extends State<ViewConfronto> {
                 ),
                 SizedBox(
                   width: widget.generalWidth,
-                  height: 400,
+                  height: crossAxisCount == 1 ? (2 * widget.generalHeight) : (widget.generalHeight),
                   child: GridView.count(
-                    crossAxisCount: 2,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: crossAxisCount,
                     children: [
                       presentEquipeEmConfronto(
                         confronto.equipaCasa,
