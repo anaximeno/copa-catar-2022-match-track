@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
 
     _sections.add(ViewConfrontos(confrontos: fetchConfrontos()));
     _sections.add(ViewEquipes(equipes: fetchEquipes()));
-    _sections.add(ViewSobre());
+    _sections.add(const ViewSobre());
   }
 
   @override
