@@ -1,6 +1,7 @@
 # Copa Catar 2022 Match Track
 
 Aplicação fullstack estruturada a apresentar jogos da copa do mundo de futebol de 2022 em Catar.
+O modelo entidade e relacionamento criado para representar os dados a serem guardados encontra-se nesse [link](imagens/entity_relationship.drawio.png).
 
 ## Como usar ?
 
