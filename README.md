@@ -11,27 +11,29 @@ Para testar a aplicação, os seguintes passos devem ser tomados:
 ```bash
 docker compose up
 ```
-
 **2. Aguarde até ver uma mensagem semelhante no terminal:**
 ```
 [Note] /opt/bitnami/mariadb/sbin/mysqld: ready for connections.
 ```
-
-**3. Fazer os seed dos dados para teste na base de dados:**
+**3. Gere as chaves do Laravel**
 ```bash
-docker compose exec myapp php artisan db:seed
+docker compose exec myapp php artisan key:generate
+```
+**4. Faça as migrações e o seed dos dados para teste na base de dados:**
+```bash
+docker compose exec myapp php artisan migrate --seed
 ```
 
-**4. Configurar o endereço IP no arquivo `flutter_frontend/lib/misc/configs.dart`, modificando a variável `const hostIpAddress = '192.168.1.69'` com o IP da sua máquina no lugar. O IP tem de ser definido numa constante pois caso se queira testar a aplicação no celular, isso vai garantir acesso do celular ao servidor Laravel se o computador e o celular estiverem conectados na mesma rede Wifi.**
+**5. Configurar o endereço IP no arquivo `flutter_frontend/lib/misc/configs.dart`, modificando a variável `const hostIpAddress = '192.168.1.69'` com o IP da sua máquina no lugar. O IP tem de ser definido numa constante pois caso se queira testar a aplicação no celular, isso vai garantir acesso do celular ao servidor Laravel se o computador e o celular estiverem conectados na mesma rede Wifi.**
 
-**5. Executar a aplicação Flutter, com os seguintes comandos:**
+**6. Executar a aplicação Flutter, com os seguintes comandos:**
 ```bash
 cd flutter_frontend
 flutter run --no-sound-null-safety
 ```
-**6. Testar a aplicação**
+**7. Testar a aplicação**
 
-**7. Pronto**
+**8. Pronto**
 
 ### Notas
 

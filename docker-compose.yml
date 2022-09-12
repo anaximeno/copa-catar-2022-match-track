@@ -9,9 +9,12 @@ services:
       - MARIADB_USER=bn_myapp
       - MARIADB_DATABASE=bitnami_myapp
     ports:
-      - 3306:3306
+      - '3306:3306'
   myapp:
     image: docker.io/bitnami/laravel:9
+    command: bash -c "composer install &&
+      cp .env.example .env             &&
+      php artisan serve --host=0.0.0.0 --port=8000"
     ports:
       - '8000:8000'
     environment:
